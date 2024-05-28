@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5346D302-0D44-4729-BD83-7BA58DF45DA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F122CC9C-7833-4F6F-8789-7B323F8D7C99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{129538EB-C261-4AB9-B481-2079DBA856F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{33BBE3D5-4878-47F9-B72F-CBC163526E77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ollama.Core", "src\Ollama.Core\Ollama.Core.csproj", "{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA} = {F122CC9C-7833-4F6F-8789-7B323F8D7C99}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEAC5571-C60C-4730-9A31-251FA12B9A48}
+	EndGlobalSection
+EndGlobal
