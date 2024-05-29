@@ -19,7 +19,10 @@ public sealed partial class OllamaClient : IDisposable
         Argument.AssertNotNull(endpoint, nameof(endpoint));
 
         this._endpoint = endpoint;
-        this._httpClient = new HttpClient();
+        this._httpClient = new HttpClient
+        {
+            BaseAddress = endpoint
+        };
         this._logger = loggerFactory?.CreateLogger(typeof(OllamaClient)) ?? NullLogger.Instance;
     }
 
@@ -70,5 +73,14 @@ public sealed partial class OllamaClient : IDisposable
         if (port.HasValue) { builder.Port = port.Value; }
 
         return builder.Uri;
+    }
+
+    private async Task<(HttpResponseMessage, string)> ExecuteHttpRequestAsync(HttpRequestMessage httpRequest, CancellationToken cancellationToken = default)
+    {
+        HttpResponseMessage response = await this._httpClient.SendWithSuccessCheckAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+        string responseContent = await response.Content.ReadAsStringWithExceptionMappingAsync().ConfigureAwait(false);
+
+        return (response, responseContent);
     }
 }
