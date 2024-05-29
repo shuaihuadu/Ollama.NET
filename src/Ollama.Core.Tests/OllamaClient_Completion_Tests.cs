@@ -9,10 +9,12 @@ public class OllamaClient_Test(ITestOutputHelper output) : BaseTest(output)
 
         //await client.GenerateCompletionAsync("qwen", "Hello!");
 
-        StreamingResponse<StreamingCompletionUpdate> response = await client.GenerateStreamingCompletionAsync("qwen", "Hello!");
-        await foreach (StreamingCompletionUpdate update in response)
+        StreamingResponse<GenerateCompletionResponse> response = await client.GenerateStreamingCompletionAsync("qwen", "Hello!");
+        await foreach (GenerateCompletionResponse item in response)
         {
-            Console.WriteLine(update.Response);
+            Console.WriteLine(item.AsJson());
         }
+
+        await client.GenerateCompletionAsync("qwen", "ÄãºÃÑ½!");
     }
 }

@@ -1,6 +1,4 @@
-﻿using Ollama.Core.ServerSendEvent;
-
-namespace Ollama.Core;
+﻿namespace Ollama.Core;
 
 public sealed partial class OllamaClient
 {
@@ -13,7 +11,7 @@ public sealed partial class OllamaClient
             Stream = false
         }, cancellationToken).ConfigureAwait(false);
     }
-    public async Task<StreamingResponse<StreamingCompletionUpdate>> GenerateStreamingCompletionAsync(string model, string prompt, CancellationToken cancellationToken = default)
+    public async Task<StreamingResponse<GenerateCompletionResponse>> GenerateStreamingCompletionAsync(string model, string prompt, CancellationToken cancellationToken = default)
     {
         return await this.GenerateStreamingCompletionAsync(new GenerateCompletionRequest
         {
@@ -23,7 +21,7 @@ public sealed partial class OllamaClient
         }, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StreamingResponse<StreamingCompletionUpdate>> GenerateStreamingCompletionAsync(GenerateCompletionRequest request, CancellationToken cancellationToken = default)
+    public async Task<StreamingResponse<GenerateCompletionResponse>> GenerateStreamingCompletionAsync(GenerateCompletionRequest request, CancellationToken cancellationToken = default)
     {
         this._logger.LogDebug("Generate streaming completion");
 
@@ -37,7 +35,7 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            return StreamingResponse<StreamingCompletionUpdate>.CreateFromResponse(response.HttpResponseMessage, (responseMessageForEnumeration) => ServerSendEventAsyncEnumerator<StreamingCompletionUpdate>.EnumerateFromSseStream(responseMessageForEnumeration, cancellationToken));
+            return StreamingResponse<GenerateCompletionResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessageForEnumeration) => ServerSendEventAsyncEnumerator<GenerateCompletionResponse>.EnumerateFromSseStream(responseMessageForEnumeration, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
