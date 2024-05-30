@@ -53,12 +53,6 @@ public abstract class GenerateCompletionRequestBase
     public List<int>? Context { get; set; }
 
     /// <summary>
-    /// If false the response will be returned as a single response object, rather than a stream of objects
-    /// </summary>
-    [JsonPropertyName("stream")]
-    public virtual bool Stream { get; }
-
-    /// <summary>
     /// If true no formatting will be applied to the prompt.You may choose to use the raw parameter if you are specifying a full templated prompt in your request to the API
     /// </summary>
     [JsonPropertyName("raw")]
@@ -68,7 +62,8 @@ public abstract class GenerateCompletionRequestBase
     /// Controls how long the model will stay loaded into memory following the request(default: 5m)
     /// </summary>
     [JsonPropertyName("keep_alive")]
-    public double KeepAlive { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? KeepAlive { get; set; }
 
     /// <summary>
     /// Additional model parameters listed in the documentation for the Modelfile such as temperature

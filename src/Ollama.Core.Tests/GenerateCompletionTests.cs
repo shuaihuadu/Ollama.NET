@@ -9,7 +9,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
     {
         OllamaClient client = GetTestClient();
 
-        GenerateCompletionResponse response = await client.GenerateCompletionAsync(model, "Hello!");
+        GenerateCompletion response = await client.GenerateCompletionAsync(model, "Hello!");
 
         Assert.NotEmpty(response.Response);
         Asserts(response);
@@ -20,11 +20,11 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
     {
         OllamaClient client = GetTestClient();
 
-        StreamingResponse<GenerateCompletionResponse> response = await client.GenerateCompletionStreamingAsync(model, "Hello!");
+        StreamingResponse<GenerateCompletion> response = await client.GenerateCompletionStreamingAsync(model, "Hello!");
 
         Assert.NotNull(response);
 
-        await foreach (GenerateCompletionResponse item in response)
+        await foreach (GenerateCompletion item in response)
         {
             Assert.NotEmpty(item.Model);
             Assert.Equal(model, item.Model);
@@ -44,7 +44,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
     {
         OllamaClient client = GetTestClient();
 
-        GenerateCompletionResponse response = await client.GenerateCompletionAsync(new GenerateCompletionRequest
+        GenerateCompletion response = await client.GenerateCompletionAsync(new GenerateCompletionRequest
         {
             Model = model,
             Prompt = "What color is the sky at different times of the day? Respond using JSON.",
@@ -54,7 +54,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
         Assert.True(response.Response.IsValidJson());
     }
 
-    private static void Asserts(GenerateCompletionResponse response)
+    private static void Asserts(GenerateCompletion response)
     {
         Assert.NotEmpty(response.Model);
         Assert.Equal(model, response.Model);

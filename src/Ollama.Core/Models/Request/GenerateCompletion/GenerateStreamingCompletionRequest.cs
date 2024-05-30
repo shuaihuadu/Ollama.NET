@@ -5,6 +5,9 @@
 /// </summary>
 public class GenerateStreamingCompletionRequest : GenerateCompletionRequestBase
 {
+    /// <summary>
+    /// If false the response will be returned as a single response object, rather than a stream of objects
+    /// </summary>
     [JsonPropertyName("stream")]
-    public override bool Stream => true;
+    public bool Stream => true;
 }

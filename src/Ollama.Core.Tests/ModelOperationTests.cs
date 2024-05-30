@@ -9,7 +9,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        LoadModelResponse response = await client.LoadModelAsync(model);
+        LoadModel response = await client.LoadModelAsync(model);
 
         Assert.NotEmpty(response.Model);
         Assert.Equal(model, response.Model);
