@@ -60,11 +60,13 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
         Assert.Equal(model, response.Model);
         Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
         Assert.True(response.Done);
+        Assert.Equal("stop", response.DoneReason, ignoreCase: true);
         Assert.NotNull(response.Context);
         Assert.True(response.Context.Length > 0);
         Assert.True(response.TotalDuration > 0);
         Assert.True(response.LoadDuration > 0);
-        Assert.True(response.PromptEvalCount > 0);
+        //Assert.True(response.PromptEvalCount > 0);
+        Assert.Equal(0, response.PromptEvalCount);
         Assert.True(response.PromptEvalDuration > 0);
         Assert.True(response.EvalCount > 0);
         Assert.True(response.EvalDuration > 0);

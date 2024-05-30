@@ -59,7 +59,13 @@ public abstract class GenerateCompletionRequestBase
     public bool Raw { get; set; }
 
     /// <summary>
-    /// Controls how long the model will stay loaded into memory following the request(default: 5m)
+    /// Controls how long the model will stay loaded into memory following the request (default: 5m)
+    /// <para>The keep_alive parameter can be set to:</para>
+    /// <list type="bullet"> a duration string (such as "10m" or "24h")
+    /// <item> a number in seconds(such as 3600) </item> 
+    /// <item> any negative number which will keep the model loaded in memory(e.g. -1 or "-1m") </item> 
+    /// <item> '0' which will unload the model immediately after generating a response </item> 
+    /// </list> 
     /// </summary>
     [JsonPropertyName("keep_alive")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

@@ -3,6 +3,12 @@
 public abstract class CompletionDoneResponseBase : CompletionResponseBase
 {
     /// <summary>
+    /// The reason the model stopped generating text.
+    /// </summary>
+    [JsonPropertyName("done_reason")]
+    public string? DoneReason { get; set; }
+
+    /// <summary>
     /// Time spent generating the response in nanoseconds.
     /// </summary>
     [JsonPropertyName("total_duration")]
