@@ -3,7 +3,7 @@
 /// <summary>
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion"/>
 /// </summary>
-public class GenerateCompletionRequest
+public abstract class GenerateCompletionRequestBase
 {
     /// <summary>
     /// The model name
@@ -14,7 +14,7 @@ public class GenerateCompletionRequest
     /// The prompt to generate a response for
     /// </summary>
     [JsonPropertyName("prompt")]
-    public required string Prompt { get; set; } = string.Empty;
+    public required string Prompt { get; set; }
 
     /// <summary>
     /// A list of base64-encoded images(for multimodal models such as llava)
@@ -56,7 +56,7 @@ public class GenerateCompletionRequest
     /// If false the response will be returned as a single response object, rather than a stream of objects
     /// </summary>
     [JsonPropertyName("stream")]
-    public bool Stream { get; set; } = true;
+    public virtual bool Stream { get; }
 
     /// <summary>
     /// If true no formatting will be applied to the prompt.You may choose to use the raw parameter if you are specifying a full templated prompt in your request to the API
