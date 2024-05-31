@@ -26,7 +26,7 @@ public sealed partial class OllamaClient
     /// <returns>Streaming <see cref="ChatMessage"/> list of completion result replied by the model</returns>
     public async Task<StreamingResponse<ChatCompletion>> ChatCompletionStreamingAsync(ChatCompletionStreamingRequest request, CancellationToken cancellationToken = default)
     {
-        this._logger.LogDebug("Chat streaming completion");
+        this._logger.LogDebug("Chat completion streaming");
 
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Model, nameof(request.Model));
@@ -38,7 +38,7 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Chat streaming completion response content: {responseContent}", response.ResponseContent);
+            this._logger.LogTrace("Chat completion streaming response content: {responseContent}", response.ResponseContent);
 
             return StreamingResponse<ChatCompletion>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<ChatCompletion>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }

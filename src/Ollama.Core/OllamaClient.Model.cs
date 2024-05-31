@@ -3,6 +3,22 @@
 public sealed partial class OllamaClient
 {
     /// <summary>
+    /// Create a model from a Modelfile with streaming response.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="modelFileContent">Contents of the Modelfile.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns></returns>
+    public async Task<StreamingResponse<CreateModel>> CreateModelStreamingAsync(string name, string modelFileContent, CancellationToken cancellationToken = default)
+    {
+        return await this.CreateModelStreamingAsync(new CreateModelStreamingRequest
+        {
+            Name = name,
+            ModelFileContent = modelFileContent
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Create a model from a Modelfile.
     /// </summary>
     /// <param name="name"></param>
@@ -31,7 +47,7 @@ public sealed partial class OllamaClient
     /// <param name="request">The create model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns></returns>
-    public async Task<StreamingResponse<CreateModel>> CreateModelStreamingAsync(CreateModelRequest request, CancellationToken cancellationToken = default)
+    public async Task<StreamingResponse<CreateModel>> CreateModelStreamingAsync(CreateModelStreamingRequest request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrEmpty(request.Name, nameof(request.Name));
@@ -42,11 +58,9 @@ public sealed partial class OllamaClient
         {
             HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
-            (HttpResponseMessage httpResponseMessage, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
-
-            this._logger.LogTrace("Create model response content: {responseContent}", responseContent);
-
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Create model response content: {responseContent}", response.ResponseContent);
 
             return StreamingResponse<CreateModel>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<CreateModel>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }
