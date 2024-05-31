@@ -11,7 +11,7 @@ public sealed partial class OllamaClient
     /// <returns>Streaming <see cref="ChatMessage"/> list of completion result replied by the model</returns>
     public async Task<StreamingResponse<ChatCompletion>> ChatCompletionStreamingAsync(string model, ChatMessageHistory chatMessageHistory, CancellationToken cancellationToken = default)
     {
-        return await this.ChatCompletionStreamingAsync(new ChatStreamingCompletionRequest
+        return await this.ChatCompletionStreamingAsync(new ChatCompletionStreamingRequest
         {
             Model = model,
             Messages = chatMessageHistory
@@ -24,7 +24,7 @@ public sealed partial class OllamaClient
     /// <param name="request">The data for this completions request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>Streaming <see cref="ChatMessage"/> list of completion result replied by the model</returns>
-    public async Task<StreamingResponse<ChatCompletion>> ChatCompletionStreamingAsync(ChatStreamingCompletionRequest request, CancellationToken cancellationToken = default)
+    public async Task<StreamingResponse<ChatCompletion>> ChatCompletionStreamingAsync(ChatCompletionStreamingRequest request, CancellationToken cancellationToken = default)
     {
         this._logger.LogDebug("Chat streaming completion");
 

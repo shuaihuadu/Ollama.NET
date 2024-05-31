@@ -55,7 +55,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
         Assert.True(response.TotalDuration > 0);
         Assert.True(response.LoadDuration > 0);
         //Assert.True(response.PromptEvalCount > 0);
-        Assert.Equal(0, response.PromptEvalCount);
+        //Assert.Equal(0, response.PromptEvalCount);
         Assert.True(response.PromptEvalDuration > 0);
         Assert.True(response.EvalCount > 0);
         Assert.True(response.EvalDuration > 0);

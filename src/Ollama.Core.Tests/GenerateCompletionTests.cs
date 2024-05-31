@@ -16,7 +16,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
     }
 
     [Fact]
-    public async Task GenerateStreamingCompletion()
+    public async Task GenerateCompletionStreaming()
     {
         OllamaClient client = GetTestClient();
 
