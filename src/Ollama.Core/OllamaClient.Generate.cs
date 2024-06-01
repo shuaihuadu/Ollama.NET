@@ -85,7 +85,7 @@ public sealed partial class OllamaClient
         {
             HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
-            (HttpResponseMessage httpResponseMessage, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
             this._logger.LogTrace("Generate completion response content: {responseContent}", responseContent);
 

@@ -85,18 +85,17 @@ public sealed partial class OllamaClient
 
         try
         {
-            using (ByteArrayContent content = new(request.Content))
-            {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            using ByteArrayContent content = new(request.Content);
 
-                HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-                requestMessage.Content = content;
+            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
-                (HttpResponseMessage HttpResponseMessage, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+            requestMessage.Content = content;
 
-                this._logger.LogTrace("Create blob response content: {responseContent}", responseContent);
-            }
+            (HttpResponseMessage HttpResponseMessage, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Create blob response content: {responseContent}", responseContent);
         }
         catch (HttpOperationException ex)
         {

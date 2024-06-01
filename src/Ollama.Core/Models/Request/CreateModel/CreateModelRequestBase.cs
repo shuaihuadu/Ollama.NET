@@ -32,6 +32,6 @@ public abstract class CreateModelRequestBase
     /// <returns></returns>
     public HttpRequestMessage ToHttpRequestMessage()
     {
-        return HttpRequest.CreatePostRequest("/api/create", this);
+        return HttpRequest.CreatePostRequest("api/create", this);
     }
 }

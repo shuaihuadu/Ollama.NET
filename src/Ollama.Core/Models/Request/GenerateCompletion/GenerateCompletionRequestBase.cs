@@ -84,6 +84,6 @@ public abstract class GenerateCompletionRequestBase
     /// <returns></returns>
     public HttpRequestMessage ToHttpRequestMessage()
     {
-        return HttpRequest.CreatePostRequest("/api/generate", this);
+        return HttpRequest.CreatePostRequest("api/generate", this);
     }
 }
