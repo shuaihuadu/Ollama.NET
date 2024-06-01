@@ -13,6 +13,7 @@ internal static class HttpRequest
     public static HttpRequestMessage CreatePatchRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Patch, url, payload);
 
     public static HttpRequestMessage CreateDeleteRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Delete, url, payload);
+    public static HttpRequestMessage CreateHeadRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Head, url, payload);
 
     private static HttpRequestMessage CreateRequest(HttpMethod method, string url, object? payload) => new(method, url) { Content = CreateJsonContent(payload) };
 
