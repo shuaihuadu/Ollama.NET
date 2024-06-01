@@ -114,6 +114,39 @@ public sealed partial class OllamaClient
         }
     }
 
+    /// <summary>
+    /// Unload the model and free up memory use generate completion endpoint.
+    /// </summary>
+    /// <param name="model">The model name.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns>The model loaded response.</returns>
+    /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
+    public async Task<LoadModel> UnloadModelUseGenerateCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
+    {
+        return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
+        {
+            Model = model,
+            KeepAlive = 0
+
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Unload the speficied model into memory use chat completion endpoint.
+    /// </summary>
+    /// <param name="model">The model name.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns>The model loaded response.</returns>
+    /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
+    public async Task<LoadModel> UnloadModelUseChatCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
+    {
+        return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
+        {
+            Model = model,
+            KeepAlive = 0
+
+        }, cancellationToken).ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Load the speficied model into memory use generate completion endpoint. <br />
@@ -122,14 +155,23 @@ public sealed partial class OllamaClient
     /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
     /// </summary>
     /// <param name="model">The model name.</param>
+    /// <param name="keepAlive">
+    /// To control how long the model is left in memory. Default is 300 seconds. <br />
+    /// To preload a model and leave it in memory use: keepAlive = -1 <br />
+    /// To unload the model and free up memory use: keepAlive = 0
+    /// </param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<LoadModel> LoadModelUseGenerateCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
+    public async Task<LoadModel> LoadModelUseGenerateCompletionEndpointAsync(string model, double keepAlive = 300, CancellationToken cancellationToken = default)
     {
-        return await this.LoadModelAsync(model, LoadModelEndpointType.GenerateCompletion, cancellationToken).ConfigureAwait(false);
-    }
+        return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
+        {
+            Model = model,
+            KeepAlive = keepAlive
 
+        }, cancellationToken).ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Load the speficied model into memory use chat completion endpoint. <br />
@@ -138,12 +180,21 @@ public sealed partial class OllamaClient
     /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
     /// </summary>
     /// <param name="model">The model name.</param>
+    /// <param name="keepAlive">
+    /// To control how long the model is left in memory. Default is 300 seconds. <br />
+    /// To preload a model and leave it in memory use: keepAlive = -1 <br />
+    /// To unload the model and free up memory use: keepAlive = 0
+    /// </param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<LoadModel> LoadModelUseChatCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
+    public async Task<LoadModel> LoadModelUseChatCompletionEndpointAsync(string model, double keepAlive = 300, CancellationToken cancellationToken = default)
     {
-        return await this.LoadModelAsync(model, LoadModelEndpointType.ChatCompletion, cancellationToken).ConfigureAwait(false);
+        return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
+        {
+            Model = model,
+            KeepAlive = keepAlive
+        }, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -157,15 +208,15 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    private async Task<LoadModel> LoadModelAsync(string model, LoadModelEndpointType loadModelEndpointType, CancellationToken cancellationToken = default)
+    private async Task<LoadModel> LoadModelAsync(LoadModelRequest request, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(model, nameof(model));
+        Argument.AssertNotNull(request.Model, nameof(request.Model));
 
-        this._logger.LogDebug("Load model: {model}", model);
+        this._logger.LogDebug("Load model: {model}", request.Model);
 
         try
         {
-            HttpRequestMessage requestMessage = this.CreateLoadModelRequestMessage(model, loadModelEndpointType);
+            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
@@ -183,22 +234,5 @@ public sealed partial class OllamaClient
 
             throw;
         }
-    }
-
-    /// <summary>
-    /// Create http request message for load model.
-    /// </summary>
-    /// <param name="model">The model name.</param>
-    /// <param name="loadModelEndpointType">The load model endpoint type.</param>
-    /// <returns></returns>
-    /// <exception cref="NotSupportedException"></exception>
-    private HttpRequestMessage CreateLoadModelRequestMessage(string model, LoadModelEndpointType loadModelEndpointType)
-    {
-        return loadModelEndpointType switch
-        {
-            LoadModelEndpointType.GenerateCompletion => new LoadModelUseGenerateCompletionRequest { Model = model }.ToHttpRequestMessage(),
-            LoadModelEndpointType.ChatCompletion => new LoadModelUseChatCompletionRequest { Model = model }.ToHttpRequestMessage(),
-            _ => throw new NotSupportedException("Not supported enpoint type to load model."),
-        };
     }
 }

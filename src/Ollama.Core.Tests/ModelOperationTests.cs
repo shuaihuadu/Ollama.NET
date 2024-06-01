@@ -11,11 +11,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         LoadModel response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
 
-        Assert.NotEmpty(response.Model);
-        Assert.Equal(model, response.Model);
-        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-        Assert.Empty(response.Response);
-        Assert.True(response.Done);
+        Asserts(response);
     }
 
     [Fact]
@@ -23,13 +19,29 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        LoadModel response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
+        LoadModel response = await client.LoadModelUseChatCompletionEndpointAsync(model);
 
-        Assert.NotEmpty(response.Model);
-        Assert.Equal(model, response.Model);
-        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-        Assert.Empty(response.Response);
-        Assert.True(response.Done);
+        Asserts(response);
+    }
+
+    [Fact]
+    public async Task UnloadModelUseGenerateCompletion()
+    {
+        OllamaClient client = GetTestClient();
+
+        LoadModel response = await client.UnloadModelUseGenerateCompletionEndpointAsync(model);
+
+        Asserts(response);
+    }
+
+    [Fact]
+    public async Task UnloadModelUseChatCompletion()
+    {
+        OllamaClient client = GetTestClient();
+
+        LoadModel response = await client.UnloadModelUseChatCompletionEndpointAsync(model);
+
+        Asserts(response);
     }
 
     [Fact]
@@ -59,4 +71,13 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
             Assert.NotEmpty(item.Status);
         }
     }
+    private static void Asserts(LoadModel response)
+    {
+        Assert.NotEmpty(response.Model);
+        Assert.Equal(model, response.Model);
+        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
+        Assert.Empty(response.Response);
+        Assert.True(response.Done);
+    }
+
 }
