@@ -1,9 +1,10 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
+/// The request for preload the model using the generate endpoint.
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion"/>
 /// </summary>
-public class LoadModelRequest
+public class LoadModelUseGenerateCompletionRequest
 {
     /// <summary>
     /// The model name
@@ -17,6 +18,6 @@ public class LoadModelRequest
     /// <returns></returns>
     public HttpRequestMessage ToHttpRequestMessage()
     {
-        return HttpRequest.CreatePostRequest("/api/generate", this);
+        return HttpRequest.CreatePostRequest("api/generate", this);
     }
 }

@@ -5,11 +5,25 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     const string model = "llama3";
 
     [Fact]
-    public async Task LoadModel()
+    public async Task LoadModelUseGenerateCompletion()
     {
         OllamaClient client = GetTestClient();
 
-        LoadModel response = await client.LoadModelAsync(model);
+        LoadModel response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
+
+        Assert.NotEmpty(response.Model);
+        Assert.Equal(model, response.Model);
+        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
+        Assert.Empty(response.Response);
+        Assert.True(response.Done);
+    }
+
+    [Fact]
+    public async Task LoadModelUseChatCompletion()
+    {
+        OllamaClient client = GetTestClient();
+
+        LoadModel response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
 
         Assert.NotEmpty(response.Model);
         Assert.Equal(model, response.Model);
