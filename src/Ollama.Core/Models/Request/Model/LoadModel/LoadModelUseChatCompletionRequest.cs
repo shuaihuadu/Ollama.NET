@@ -4,7 +4,7 @@
 /// The request for preload the model using the chat endpoint.
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
 /// </summary>
-internal sealed class LoadModelUseChatCompletionRequest : LoadModelRequest
+internal sealed class LoadModelUseChatCompletionRequest : LoadModelRequestBase
 {
     /// <inheritdoc/>
     public override HttpRequestMessage ToHttpRequestMessage()

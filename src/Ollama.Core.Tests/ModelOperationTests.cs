@@ -67,10 +67,33 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         await foreach (var item in response)
         {
-            Console.WriteLine(item.Status);
             Assert.NotEmpty(item.Status);
         }
     }
+
+    [Fact]
+    public async Task ListModels()
+    {
+        OllamaClient client = GetTestClient();
+
+        ListModel models = await client.ListModelsAsync();
+
+        foreach (var model in models.Models)
+        {
+            Assert.NotEmpty(model.Name);
+        }
+    }
+
+    [Fact]
+    public async Task ShowModel()
+    {
+        OllamaClient client = GetTestClient();
+
+        ShowModelResponse response = await client.ShowModelAsync(model);
+
+        Assert.NotNull(response);
+    }
+
     private static void Asserts(LoadModel response)
     {
         Assert.NotEmpty(response.Model);
@@ -79,5 +102,4 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
         Assert.Empty(response.Response);
         Assert.True(response.Done);
     }
-
 }

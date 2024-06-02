@@ -34,7 +34,7 @@ public sealed partial class OllamaClient
 
         try
         {
-            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
@@ -83,7 +83,7 @@ public sealed partial class OllamaClient
 
         try
         {
-            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 

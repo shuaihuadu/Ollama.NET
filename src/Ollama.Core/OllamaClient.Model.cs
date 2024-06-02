@@ -3,6 +3,36 @@
 public sealed partial class OllamaClient
 {
     /// <summary>
+    /// List models that are available locally.
+    /// </summary>
+    /// <returns>The local models.</returns>
+    public async Task<ListModel> ListModelsAsync(CancellationToken cancellationToken = default)
+    {
+        this._logger.LogDebug("Listing models");
+
+        try
+        {
+            using HttpRequestMessage requestMessage = new ListModelRequest().ToHttpRequestMessage();
+
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("List model response content: {responseContent}", responseContent);
+
+            ListModel? models = responseContent.FromJson<ListModel>();
+
+            return models is null
+                ? throw new DeserializationException(responseContent, message: $"The list model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(ListModel)}.", innerException: null)
+                : models;
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for list model faild. {Message}", ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
     /// Create a model from a Modelfile with streaming response.
     /// </summary>
     /// <param name="name"></param>
@@ -56,7 +86,7 @@ public sealed partial class OllamaClient
 
         try
         {
-            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
@@ -94,7 +124,7 @@ public sealed partial class OllamaClient
 
         try
         {
-            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
@@ -203,20 +233,19 @@ public sealed partial class OllamaClient
     /// This works with both the /api/generate and /api/chat API endpoints.<br />
     /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
     /// </summary>
-    /// <param name="model">The model name.</param>
-    /// <param name="loadModelEndpointType">The load model endpoint type.</param>
+    /// <param name="request">The load model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    private async Task<LoadModel> LoadModelAsync(LoadModelRequest request, CancellationToken cancellationToken = default)
+    private async Task<LoadModel> LoadModelAsync(LoadModelRequestBase request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request.Model, nameof(request.Model));
 
-        this._logger.LogDebug("Load model: {model}", request.Model);
+        this._logger.LogDebug("Load model: {request}", request.AsJson());
 
         try
         {
-            HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
@@ -231,6 +260,55 @@ public sealed partial class OllamaClient
         catch (HttpOperationException ex)
         {
             this._logger.LogError(ex, "Request for load model faild. {Message}", ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Show information about a model including details, modelfile, template, parameters, license, and system prompt.
+    /// </summary>
+    /// <param name="name">The model name.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns>The model information.</returns>
+    public async Task<ShowModelResponse> ShowModelAsync(string name, CancellationToken cancellationToken = default)
+    {
+        return await this.ShowModelAsync(new ShowModelRequest
+        {
+            Name = name
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Show information about a model including details, modelfile, template, parameters, license, and system prompt.
+    /// </summary>
+    /// <param name="request">The show model request.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns>The model information.</returns>
+    private async Task<ShowModelResponse> ShowModelAsync(ShowModelRequest request, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNull(request.Name, nameof(request.Name));
+
+        this._logger.LogDebug("Show model: {request}", request.AsJson());
+
+        try
+        {
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Show model response content: {responseContent}", responseContent);
+
+            ShowModelResponse? response = responseContent.FromJson<ShowModelResponse>();
+
+            return response is null
+                ? throw new DeserializationException(responseContent, message: $"The show model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(LoadModel)}.", innerException: null)
+                : response;
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for show model faild. {Message}", ex.Message);
 
             throw;
         }
