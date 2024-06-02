@@ -6,7 +6,7 @@
 internal abstract class PullModelRequestBase
 {
     /// <summary>
-    /// Name of the model to pull
+    /// Name of the model to pull.
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }

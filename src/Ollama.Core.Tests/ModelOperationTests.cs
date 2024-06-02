@@ -119,6 +119,43 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
         Assert.DoesNotContain(response.Models, x => x.Name == "llama3-mario1:latest");
     }
 
+    [Fact]
+    public async Task PullModel()
+    {
+        string modelName = "all-minilm";
+
+        OllamaClient client = GetTestClient();
+
+        await client.DeleteModelAsync(modelName);
+
+        PullModelResponse response = await client.PullModelAsync(modelName);
+
+        Assert.NotNull(response);
+        Assert.Equal("success", response.Status);
+
+    }
+
+    [Fact]
+    public async Task PullModelStreaming()
+    {
+        string modelName = "all-minilm";
+
+        OllamaClient client = GetTestClient();
+
+        await client.DeleteModelAsync(modelName);
+
+        StreamingResponse<PullModelResponse> response = await client.PullModelStreamingAsync(modelName);
+
+        await foreach (var item in response)
+        {
+            Assert.NotEmpty(item.Status);
+
+            //Console.WriteLine(item.Status);
+
+            Console.WriteLine($"{item.Completed / item.Total:P2}");
+        }
+    }
+
     private static void Asserts(LoadModelResponse response)
     {
         Assert.NotEmpty(response.Model);

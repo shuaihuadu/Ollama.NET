@@ -163,6 +163,96 @@ public sealed partial class OllamaClient
     }
 
     /// <summary>
+    /// Download a model from the ollama library. <br />
+    /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// </summary>
+    /// <param name="name">Name of the model to pull.</param>
+    /// <param name="insecure">
+    /// Allow insecure connections to the library. 
+    /// Only use this if you are pulling from your own library during development.
+    /// </param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <remarks>
+    /// Then there is a series of downloading responses. Until any of the download is completed, the completed key may not be included. The number of files to be downloaded depends on the number of layers specified in the manifest.
+    /// </remarks>
+    /// <returns></returns>
+    public async Task<PullModelResponse> PullModelAsync(string name, bool? insecure = null, CancellationToken cancellationToken = default)
+    {
+        return await this.PullModelAsync(new PullModelRequest
+        {
+            Name = name,
+            Insecure = insecure,
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+
+    /// <summary>
+    /// Download a model from the ollama library with streaming. <br />
+    /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// </summary>
+    /// <param name="name">Name of the model to pull.</param>
+    /// <param name="insecure">
+    /// Allow insecure connections to the library. 
+    /// Only use this if you are pulling from your own library during development.
+    /// </param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <remarks>
+    /// Then there is a series of downloading responses. Until any of the download is completed, the completed key may not be included. The number of files to be downloaded depends on the number of layers specified in the manifest.
+    /// </remarks>
+    /// <returns></returns>
+    public async Task<StreamingResponse<PullModelResponse>> PullModelStreamingAsync(string name, bool? insecure = null, CancellationToken cancellationToken = default)
+    {
+        return await this.PullModelStreamingAsync(new PullModelStreamingRequest
+        {
+            Name = name,
+            Insecure = insecure,
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Upload a model to a model library. Requires registering for ollama.ai and adding a public key first. <br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// </summary>
+    /// <param name="name">Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. </param>
+    /// <param name="insecure">
+    /// Allow insecure connections to the library. 
+    /// Only use this if you are pulling from your own library during development.
+    /// </param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns></returns>
+    public async Task<PushModelResponse> PushModelAsync(string name, bool? insecure = null, CancellationToken cancellationToken = default)
+    {
+        return await this.PushModelAsync(new PushModelRequest
+        {
+            Name = name,
+            Insecure = insecure
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+
+    /// <summary>
+    /// Upload a model to a model library with streaming. Requires registering for ollama.ai and adding a public key first. <br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// </summary>
+    /// <param name="name">Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. </param>
+    /// <param name="insecure">
+    /// Allow insecure connections to the library. 
+    /// Only use this if you are pulling from your own library during development.
+    /// </param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns></returns>
+    public async Task<StreamingResponse<PushModelResponse>> PushModelStreamingAsync(string name, bool? insecure = null, CancellationToken cancellationToken = default)
+    {
+        return await this.PushModelStreamingAsync(new PushModelRequest
+        {
+            Name = name,
+            Insecure = insecure
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// List models that are available locally.
     /// </summary>
     /// <returns>The local models.</returns>
@@ -334,7 +424,7 @@ public sealed partial class OllamaClient
             ShowModelResponse? response = responseContent.FromJson<ShowModelResponse>();
 
             return response is null
-                ? throw new DeserializationException(responseContent, message: $"The show model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(LoadModelResponse)}.", innerException: null)
+                ? throw new DeserializationException(responseContent, message: $"The show model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(ShowModelResponse)}.", innerException: null)
                 : response;
         }
         catch (HttpOperationException ex)
@@ -401,6 +491,152 @@ public sealed partial class OllamaClient
         catch (HttpOperationException ex)
         {
             this._logger.LogError(ex, "Request for delete model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Download a model from the ollama library. <br />
+    /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// </summary>
+    /// <param name="request">The pull model request.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <remarks>
+    /// Then there is a series of downloading responses. Until any of the download is completed, the completed key may not be included. The number of files to be downloaded depends on the number of layers specified in the manifest.
+    /// </remarks>
+    /// <returns></returns>
+    private async Task<PullModelResponse> PullModelAsync(PullModelRequest request, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
+
+        this._logger.LogDebug("Pull model: {request}", request.AsJson());
+
+        try
+        {
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Pull model response content: {responseContent}", responseContent);
+
+            PullModelResponse? response = responseContent.FromJson<PullModelResponse>();
+
+            return response is null || string.IsNullOrWhiteSpace(response.Status)
+                ? throw new DeserializationException(responseContent, message: $"The pull model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(PullModelResponse)}.", innerException: null)
+                : response;
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for pull model faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Download a model from the ollama library streaming. <br />
+    /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// </summary>
+    /// <param name="request">The pull model request.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <remarks>
+    /// Then there is a series of downloading responses. Until any of the download is completed, the completed key may not be included. The number of files to be downloaded depends on the number of layers specified in the manifest.
+    /// </remarks>
+    /// <returns></returns>
+    private async Task<StreamingResponse<PullModelResponse>> PullModelStreamingAsync(PullModelStreamingRequest request, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
+
+        this._logger.LogDebug("Pull model streaming: {request}", request.AsJson());
+
+        try
+        {
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+
+            (HttpResponseMessage HttpResponseMessage, string responseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Pull model streaming response content: {responseContent}", response.responseContent);
+
+            return StreamingResponse<PullModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PullModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for pull model streaming faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Upload a model to a model library. Requires registering for ollama.ai and adding a public key first. <br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// </summary>
+    /// <param name="request">The push model request.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns></returns>
+    private async Task<PushModelResponse> PushModelAsync(PushModelRequest request, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
+
+        this._logger.LogDebug("Push model: {request}", request.AsJson());
+
+        try
+        {
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Push model response content: {responseContent}", responseContent);
+
+            PushModelResponse? response = responseContent.FromJson<PushModelResponse>();
+
+            return response is null || string.IsNullOrWhiteSpace(response.Status)
+                ? throw new DeserializationException(responseContent, message: $"The push model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(PullModelResponse)}.", innerException: null)
+                : response;
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for push model faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+
+            throw;
+        }
+    }
+
+
+    /// <summary>
+    /// Upload a model to a model library streaming. <br />
+    /// Requires registering for ollama.ai and adding a public key first. <br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// </summary>
+    /// <param name="request">The push model request.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <returns></returns>
+    private async Task<StreamingResponse<PushModelResponse>> PushModelStreamingAsync(PushModelRequest request, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
+
+        this._logger.LogDebug("Push model streaming: {request}", request.AsJson());
+
+        try
+        {
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+
+            (HttpResponseMessage HttpResponseMessage, string responseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Push model streaming response content: {responseContent}", response.responseContent);
+
+            return StreamingResponse<PushModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PushModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for push model streaming faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
 
             throw;
         }

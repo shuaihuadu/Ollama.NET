@@ -6,7 +6,7 @@
 internal abstract class PushModelRequestBase
 {
     /// <summary>
-    /// name of the model to push in the form of <namespace>/<model>:<tag>
+    /// Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. 
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }
