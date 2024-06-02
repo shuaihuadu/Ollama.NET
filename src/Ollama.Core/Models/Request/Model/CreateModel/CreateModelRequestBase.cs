@@ -3,7 +3,7 @@
 /// <summary>
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/>
 /// </summary>
-public abstract class CreateModelRequestBase
+internal abstract class CreateModelRequestBase
 {
     /// <summary>
     /// Name of the model to create.

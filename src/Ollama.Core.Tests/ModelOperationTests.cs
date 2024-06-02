@@ -94,6 +94,20 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
         Assert.NotNull(response);
     }
 
+
+    [Fact]
+    public async Task CopyMode()
+    {
+        OllamaClient client = GetTestClient();
+
+        await client.CopyModelAsync("llama3", "llama3-1");
+
+        ListModelResponse response = await client.ListModelsAsync();
+
+        Assert.Contains(response.Models, x => x.Name == "llama3-1:latest");
+    }
+
+
     private static void Asserts(LoadModelResponse response)
     {
         Assert.NotEmpty(response.Model);
