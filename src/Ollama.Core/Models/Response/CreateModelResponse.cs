@@ -1,9 +1,9 @@
 ﻿namespace Ollama.Core.Models;
 
-public class CreateModel
+public class CreateModelResponse
 {
     [JsonConstructor]
-    internal CreateModel(string status)
+    internal CreateModelResponse(string status)
     {
         this.Status = status;
     }

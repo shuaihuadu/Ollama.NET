@@ -6,7 +6,7 @@ public sealed partial class OllamaClient
     /// List models that are available locally.
     /// </summary>
     /// <returns>The local models.</returns>
-    public async Task<ListModel> ListModelsAsync(CancellationToken cancellationToken = default)
+    public async Task<ListModelResponse> ListModelsAsync(CancellationToken cancellationToken = default)
     {
         this._logger.LogDebug("Listing models");
 
@@ -18,10 +18,10 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("List model response content: {responseContent}", responseContent);
 
-            ListModel? models = responseContent.FromJson<ListModel>();
+            ListModelResponse? models = responseContent.FromJson<ListModelResponse>();
 
             return models is null
-                ? throw new DeserializationException(responseContent, message: $"The list model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(ListModel)}.", innerException: null)
+                ? throw new DeserializationException(responseContent, message: $"The list model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(ListModelResponse)}.", innerException: null)
                 : models;
         }
         catch (HttpOperationException ex)
@@ -39,7 +39,7 @@ public sealed partial class OllamaClient
     /// <param name="modelFileContent">Contents of the Modelfile.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns></returns>
-    public async Task<StreamingResponse<CreateModel>> CreateModelStreamingAsync(string name, string modelFileContent, CancellationToken cancellationToken = default)
+    public async Task<StreamingResponse<CreateModelResponse>> CreateModelStreamingAsync(string name, string modelFileContent, CancellationToken cancellationToken = default)
     {
         return await this.CreateModelStreamingAsync(new CreateModelStreamingRequest
         {
@@ -55,7 +55,7 @@ public sealed partial class OllamaClient
     /// <param name="modelFileContent">Contents of the Modelfile.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns></returns>
-    public async Task<CreateModel> CreateModelAsync(string name, string modelFileContent, CancellationToken cancellationToken = default)
+    public async Task<CreateModelResponse> CreateModelAsync(string name, string modelFileContent, CancellationToken cancellationToken = default)
     {
         return await this.CreateModelAsync(new CreateModelRequest
         {
@@ -77,7 +77,7 @@ public sealed partial class OllamaClient
     /// <param name="request">The create model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns></returns>
-    public async Task<StreamingResponse<CreateModel>> CreateModelStreamingAsync(CreateModelStreamingRequest request, CancellationToken cancellationToken = default)
+    public async Task<StreamingResponse<CreateModelResponse>> CreateModelStreamingAsync(CreateModelStreamingRequest request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrEmpty(request.Name, nameof(request.Name));
@@ -92,7 +92,7 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Create model response content: {responseContent}", response.ResponseContent);
 
-            return StreamingResponse<CreateModel>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<CreateModel>.EnumerateFromSseStream(responseMessage, cancellationToken));
+            return StreamingResponse<CreateModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<CreateModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
@@ -115,7 +115,7 @@ public sealed partial class OllamaClient
     /// <param name="request">The create model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns></returns>
-    public async Task<CreateModel> CreateModelAsync(CreateModelRequest request, CancellationToken cancellationToken = default)
+    public async Task<CreateModelResponse> CreateModelAsync(CreateModelRequest request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrEmpty(request.Name, nameof(request.Name));
@@ -130,10 +130,10 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Create model response content: {responseContent}", responseContent);
 
-            CreateModel? createModel = responseContent.FromJson<CreateModel>();
+            CreateModelResponse? createModel = responseContent.FromJson<CreateModelResponse>();
 
             return createModel is null || string.IsNullOrWhiteSpace(createModel.Status)
-                ? throw new DeserializationException(responseContent, message: $"The create model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(CreateModel)}.", innerException: null)
+                ? throw new DeserializationException(responseContent, message: $"The create model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(CreateModelResponse)}.", innerException: null)
                 : createModel;
         }
         catch (HttpOperationException ex)
@@ -151,7 +151,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<LoadModel> UnloadModelUseGenerateCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
+    public async Task<LoadModelResponse> UnloadModelUseGenerateCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
     {
         return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
         {
@@ -168,7 +168,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<LoadModel> UnloadModelUseChatCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
+    public async Task<LoadModelResponse> UnloadModelUseChatCompletionEndpointAsync(string model, CancellationToken cancellationToken = default)
     {
         return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
         {
@@ -193,7 +193,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<LoadModel> LoadModelUseGenerateCompletionEndpointAsync(string model, double keepAlive = 300, CancellationToken cancellationToken = default)
+    public async Task<LoadModelResponse> LoadModelUseGenerateCompletionEndpointAsync(string model, double keepAlive = 300, CancellationToken cancellationToken = default)
     {
         return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
         {
@@ -218,7 +218,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<LoadModel> LoadModelUseChatCompletionEndpointAsync(string model, double keepAlive = 300, CancellationToken cancellationToken = default)
+    public async Task<LoadModelResponse> LoadModelUseChatCompletionEndpointAsync(string model, double keepAlive = 300, CancellationToken cancellationToken = default)
     {
         return await this.LoadModelAsync(new LoadModelUseGenerateCompletionRequest
         {
@@ -237,7 +237,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>The model loaded response.</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    private async Task<LoadModel> LoadModelAsync(LoadModelRequestBase request, CancellationToken cancellationToken = default)
+    private async Task<LoadModelResponse> LoadModelAsync(LoadModelRequestBase request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request.Model, nameof(request.Model));
 
@@ -251,10 +251,10 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Load model response content: {responseContent}", responseContent);
 
-            LoadModel? loadModel = responseContent.FromJson<LoadModel>();
+            LoadModelResponse? loadModel = responseContent.FromJson<LoadModelResponse>();
 
             return loadModel is null || string.IsNullOrWhiteSpace(loadModel.Model)
-                ? throw new DeserializationException(responseContent, message: $"The load model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(LoadModel)}.", innerException: null)
+                ? throw new DeserializationException(responseContent, message: $"The load model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(LoadModelResponse)}.", innerException: null)
                 : loadModel;
         }
         catch (HttpOperationException ex)
@@ -303,7 +303,7 @@ public sealed partial class OllamaClient
             ShowModelResponse? response = responseContent.FromJson<ShowModelResponse>();
 
             return response is null
-                ? throw new DeserializationException(responseContent, message: $"The show model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(LoadModel)}.", innerException: null)
+                ? throw new DeserializationException(responseContent, message: $"The show model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(LoadModelResponse)}.", innerException: null)
                 : response;
         }
         catch (HttpOperationException ex)

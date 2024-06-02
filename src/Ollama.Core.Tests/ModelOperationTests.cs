@@ -9,7 +9,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        LoadModel response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
+        LoadModelResponse response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
 
         Asserts(response);
     }
@@ -19,7 +19,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        LoadModel response = await client.LoadModelUseChatCompletionEndpointAsync(model);
+        LoadModelResponse response = await client.LoadModelUseChatCompletionEndpointAsync(model);
 
         Asserts(response);
     }
@@ -29,7 +29,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        LoadModel response = await client.UnloadModelUseGenerateCompletionEndpointAsync(model);
+        LoadModelResponse response = await client.UnloadModelUseGenerateCompletionEndpointAsync(model);
 
         Asserts(response);
     }
@@ -39,7 +39,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        LoadModel response = await client.UnloadModelUseChatCompletionEndpointAsync(model);
+        LoadModelResponse response = await client.UnloadModelUseChatCompletionEndpointAsync(model);
 
         Asserts(response);
     }
@@ -49,7 +49,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        CreateModel response = await client.CreateModelAsync("llama3-mario1", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
+        CreateModelResponse response = await client.CreateModelAsync("llama3-mario1", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
         Assert.NotNull(response);
         Assert.Equal("success", response.Status);
@@ -61,7 +61,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        StreamingResponse<CreateModel> response = await client.CreateModelStreamingAsync("llama3-mario2", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
+        StreamingResponse<CreateModelResponse> response = await client.CreateModelStreamingAsync("llama3-mario2", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
         Assert.NotNull(response);
 
@@ -76,7 +76,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        ListModel models = await client.ListModelsAsync();
+        ListModelResponse models = await client.ListModelsAsync();
 
         foreach (var model in models.Models)
         {
@@ -94,7 +94,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
         Assert.NotNull(response);
     }
 
-    private static void Asserts(LoadModel response)
+    private static void Asserts(LoadModelResponse response)
     {
         Assert.NotEmpty(response.Model);
         Assert.Equal(model, response.Model);

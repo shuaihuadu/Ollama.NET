@@ -1,9 +1,9 @@
 ﻿namespace Ollama.Core.Models;
 
-public class LoadModel : CompletionResponseBase
+public class LoadModelResponse : CompletionResponseBase
 {
     [JsonConstructor]
-    internal LoadModel(
+    internal LoadModelResponse(
         string model,
         DateTimeOffset createdAt,
         string response,

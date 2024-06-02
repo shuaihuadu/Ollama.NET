@@ -18,10 +18,16 @@ public class ShowModelResponse
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? ModelFile { get; set; }
 
+    /// <summary>
+    /// The parameters is for how Ollama will run the model.
+    /// </summary>
     [JsonPropertyName("parameters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Parameters { get; set; }
 
+    /// <summary>
+    /// The full prompt template in the model.
+    /// </summary>
     [JsonPropertyName("template")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Template { get; set; }

@@ -1,9 +1,9 @@
 ﻿namespace Ollama.Core.Models;
 
-public class GenerateCompletion : CompletionDoneResponseBase
+public class GenerateCompletionResponse : CompletionDoneResponseBase
 {
     [JsonConstructor]
-    internal GenerateCompletion(
+    internal GenerateCompletionResponse(
         string model,
         DateTimeOffset createdAt,
         string response,

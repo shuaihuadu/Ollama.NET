@@ -1,10 +1,10 @@
 ﻿namespace Ollama.Core.Models;
 
-/// <summary>
-/// 
-/// </summary>
-public sealed class ListModel
+public sealed class ListModelResponse
 {
+    /// <summary>
+    /// The models.
+    /// </summary>
     [JsonPropertyName("models")]
     public IList<ListModelItem> Models { get; set; } = [];
 }

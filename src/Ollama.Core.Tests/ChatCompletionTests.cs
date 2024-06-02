@@ -13,7 +13,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         messages.AddUserMessage("Hello!");
 
-        ChatCompletion response = await client.ChatCompletionAsync(model, messages);
+        ChatCompletionResponse response = await client.ChatCompletionAsync(model, messages);
 
         Assert.NotNull(response.Message);
         Assert.NotNull(response.Message.Content);
@@ -34,7 +34,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
         messages.AddAssistantMessage("It's rainy!");
         messages.AddUserMessage("What should I do when I go out?");
 
-        ChatCompletion response = await client.ChatCompletionAsync(model, messages);
+        ChatCompletionResponse response = await client.ChatCompletionAsync(model, messages);
 
         Assert.NotNull(response.Message);
         Assert.NotNull(response.Message.Content);
@@ -46,7 +46,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
         Asserts(response);
     }
 
-    private static void Asserts(ChatCompletion response)
+    private static void Asserts(ChatCompletionResponse response)
     {
         Assert.NotEmpty(response.Model);
         Assert.Equal(model, response.Model);
