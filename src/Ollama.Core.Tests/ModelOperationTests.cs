@@ -96,17 +96,28 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
 
     [Fact]
-    public async Task CopyMode()
+    public async Task CopyModel()
     {
         OllamaClient client = GetTestClient();
 
-        await client.CopyModelAsync("llama3", "llama3-1");
+        await client.CopyModelAsync("llama3", "llama3-mario1");
 
         ListModelResponse response = await client.ListModelsAsync();
 
-        Assert.Contains(response.Models, x => x.Name == "llama3-1:latest");
+        Assert.Contains(response.Models, x => x.Name == "llama3-mario1:latest");
     }
 
+    [Fact]
+    public async Task DeleteModel()
+    {
+        OllamaClient client = GetTestClient();
+
+        await client.DeleteModelAsync("llama3-mario1");
+
+        ListModelResponse response = await client.ListModelsAsync();
+
+        Assert.DoesNotContain(response.Models, x => x.Name == "llama3-mario1:latest");
+    }
 
     private static void Asserts(LoadModelResponse response)
     {

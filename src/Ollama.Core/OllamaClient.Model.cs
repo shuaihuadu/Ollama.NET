@@ -145,7 +145,21 @@ public sealed partial class OllamaClient
         {
             Source = source,
             Destination = destination,
-        }).ConfigureAwait(false);
+        }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Delete a model and its data.
+    /// </summary>
+    /// <param name="name">The model name to delete.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task DeleteModelAsync(string name, CancellationToken cancellationToken = default)
+    {
+        await this.DeleteModelAsync(new DeleteModelRequest
+        {
+            Name = name
+        }, cancellationToken);
     }
 
     /// <summary>
@@ -210,7 +224,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for create model streaming faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Request for create model streaming faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
 
             throw;
         }
@@ -252,7 +266,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for create model faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Request for create model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
 
             throw;
         }
@@ -290,7 +304,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for load model faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Request for load model faild. Model name: {Name}, Message: {Message}", request.Model, ex.Message);
 
             throw;
         }
@@ -307,7 +321,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Show model: {request}", request.AsJson());
+        this._logger.LogDebug("Show model: {name}", request.Name);
 
         try
         {
@@ -325,7 +339,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for show model faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Request for show model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
 
             throw;
         }
@@ -356,7 +370,37 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for show model faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Request for show model faild. Source model name: {Name}, Message: {Message}", request.Source, ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Delete a model and its data.
+    /// </summary>
+    /// <param name="request">The delete model request.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
+    /// <remarks>Returns a 200 OK if successful, 404 Not Found if the model to be deleted doesn't exist.</remarks>
+    /// <returns></returns>
+    private async Task DeleteModelAsync(DeleteModelRequest request, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
+
+        this._logger.LogDebug("Delete model: {name}", request.Name);
+
+        try
+        {
+            using HttpRequestMessage requestMessage = request.ToHttpRequestMessage();
+
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("Delete model response content: {responseContent}", responseContent);
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for delete model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
 
             throw;
         }
