@@ -76,7 +76,7 @@ public abstract class GenerateCompletionRequestBase
     /// </summary>
     [JsonPropertyName("options")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public CompletionOptions? Options { get; set; }
+    public ParameterOptions? Options { get; set; }
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

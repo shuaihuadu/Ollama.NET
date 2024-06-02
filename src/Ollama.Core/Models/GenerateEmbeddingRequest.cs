@@ -1,29 +1,20 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion"/>
+/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-embeddings"/>
 /// </summary>
-public abstract class ChatCompletionRequestBase
+internal sealed class GenerateEmbeddingRequest
 {
     /// <summary>
-    /// The model name
+    /// Name of model to generate embeddings from
     /// </summary>
     [JsonPropertyName("model")]
     public required string Model { get; set; }
-
     /// <summary>
-    /// The messages of the chat, this can be used to keep a chat memory
+    /// Text to generate embeddings for
     /// </summary>
-    [JsonPropertyName("messages")]
-    public required ChatMessageHistory Messages { get; set; }
-
-    /// <summary>
-    /// The format to return a response in.
-    /// Currently the only accepted value is json.
-    /// </summary>
-    [JsonPropertyName("format")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Format { get; set; }
+    [JsonPropertyName("prompt")]
+    public required string Prompt { get; set; }
 
     /// <summary>
     /// Controls how long the model will stay loaded into memory following the request (default: 5m)
@@ -51,6 +42,6 @@ public abstract class ChatCompletionRequestBase
     /// <returns></returns>
     public HttpRequestMessage ToHttpRequestMessage()
     {
-        return HttpRequest.CreatePostRequest("/api/chat", this);
+        return HttpRequest.CreatePostRequest("api/embeddings", this);
     }
 }

@@ -1,6 +1,10 @@
 ﻿namespace Ollama.Core.Models;
 
-public class CompletionOptions
+/// <summary>
+/// The <seealso cref="ParameterOptions"/> defines parameters that can be set when the model is run. <br />
+/// <see cref="https://github.com/ollama/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values"/>
+/// </summary>
+public class ParameterOptions
 {
     /// <summary>
     /// Enable Mirostat sampling for controlling perplexity. (default: 0, 0 = disabled, 1 = Mirostat, 2 = Mirostat 2.0)
@@ -39,7 +43,7 @@ public class CompletionOptions
     /// A higher value(e.g., 1.5) will penalize repetitions more strongly, while a lower value(e.g., 0.9) will be more lenient. (Default: 1.1)
     /// </summary>
     [JsonPropertyName("repeat_penalty")]
-    public float RepeatPenalty = 1.1f;
+    public float RepeatPenalty { get; set; } = 1.1f;
 
     /// <summary>
     /// The temperature of the model.Increasing the temperature will make the model answer more creatively. (Default: 0.8)
