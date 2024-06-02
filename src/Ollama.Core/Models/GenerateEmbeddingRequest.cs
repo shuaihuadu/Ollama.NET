@@ -6,12 +6,12 @@
 internal sealed class GenerateEmbeddingRequest
 {
     /// <summary>
-    /// Name of model to generate embeddings from
+    /// Name of model to generate embeddings from.
     /// </summary>
     [JsonPropertyName("model")]
     public required string Model { get; set; }
     /// <summary>
-    /// Text to generate embeddings for
+    /// Text to generate embeddings for.
     /// </summary>
     [JsonPropertyName("prompt")]
     public required string Prompt { get; set; }

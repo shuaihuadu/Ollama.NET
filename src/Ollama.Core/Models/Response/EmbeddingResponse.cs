@@ -6,5 +6,5 @@ public sealed class EmbeddingResponse
     /// The generated embeddings.
     /// </summary>
     [JsonPropertyName("embedding")]
-    public ReadOnlyMemory<float> Embedding { get; set; }
+    public ReadOnlyMemory<float>? Embedding { get; set; }
 }
