@@ -43,17 +43,18 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
     [Fact]
     public async Task GenerateCompletion_FormatJson()
     {
-        //TODO GenerateCompletionRequest
-        //OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
-        //GenerateCompletionResponse response = await client.GenerateCompletionAsync(new GenerateCompletionRequest
-        //{
-        //    Model = model,
-        //    Prompt = "What color is the sky at different times of the day? Respond using JSON.",
-        //    Format = "json"
-        //});
+        GenerateCompletionOptions options = new()
+        {
+            Model = model,
+            Prompt = "What color is the sky at different times of the day? Respond using JSON.",
+            Format = "json"
+        };
 
-        //Assert.True(response.Response.IsValidJson());
+        GenerateCompletionResponse response = await client.GenerateCompletionAsync(options);
+
+        Assert.True(response.Response.IsValidJson());
     }
 
     private static void Asserts(GenerateCompletionResponse response)

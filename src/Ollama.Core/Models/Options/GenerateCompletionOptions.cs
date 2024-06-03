@@ -32,6 +32,13 @@ public class GenerateCompletionOptions
     public string? Format { get; set; }
 
     /// <summary>
+    /// Additional model parameters listed in the documentation for the Modelfile such as temperature.
+    /// </summary>
+    [JsonPropertyName("options")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ParameterOptions? Options { get; set; }
+
+    /// <summary>
     /// System message to (overrides what is defined in the Modelfile).
     /// </summary>
     [JsonPropertyName("system")]
@@ -53,6 +60,12 @@ public class GenerateCompletionOptions
     public List<int>? Context { get; set; }
 
     /// <summary>
+    /// If false the response will be returned as a single response object, rather than a stream of objects
+    /// </summary>
+    [JsonPropertyName("stream")]
+    public bool Stream { get; protected set; }
+
+    /// <summary>
     /// If true no formatting will be applied to the prompt.You may choose to use the raw parameter if you are specifying a full templated prompt in your request to the API.
     /// </summary>
     [JsonPropertyName("raw")]
@@ -70,11 +83,4 @@ public class GenerateCompletionOptions
     [JsonPropertyName("keep_alive")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public double? KeepAlive { get; set; }
-
-    /// <summary>
-    /// Additional model parameters listed in the documentation for the Modelfile such as temperature.
-    /// </summary>
-    [JsonPropertyName("options")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ParameterOptions? Options { get; set; }
 }
