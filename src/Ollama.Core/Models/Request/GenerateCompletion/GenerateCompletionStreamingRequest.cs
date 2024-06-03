@@ -5,6 +5,17 @@
 /// </summary>
 internal sealed class GenerateCompletionStreamingRequest : GenerateCompletionRequestBase
 {
+    /// <inheritdoc />
+    public GenerateCompletionStreamingRequest() { }
+
+    /// <inheritdoc />
+    [SetsRequiredMembers]
+    public GenerateCompletionStreamingRequest(GenerateCompletionOptions options) : base(options) { }
+
+    /// <inheritdoc />
+    [SetsRequiredMembers]
+    public GenerateCompletionStreamingRequest(string model, string prompt) : base(model, prompt) { }
+
     /// <summary>
     /// If false the response will be returned as a single response object, rather than a stream of objects
     /// </summary>
