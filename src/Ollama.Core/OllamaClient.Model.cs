@@ -186,7 +186,6 @@ public sealed partial class OllamaClient
         }, cancellationToken).ConfigureAwait(false);
     }
 
-
     /// <summary>
     /// Download a model from the ollama library with streaming. <br />
     /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
@@ -230,7 +229,6 @@ public sealed partial class OllamaClient
             Insecure = insecure
         }, cancellationToken).ConfigureAwait(false);
     }
-
 
     /// <summary>
     /// Upload a model to a model library with streaming. Requires registering for ollama.ai and adding a public key first. <br />
@@ -609,7 +607,6 @@ public sealed partial class OllamaClient
             throw;
         }
     }
-
 
     /// <summary>
     /// Upload a model to a model library streaming. <br />
