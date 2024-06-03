@@ -49,7 +49,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     {
         OllamaClient client = GetTestClient();
 
-        CreateModelResponse response = await client.CreateModelAsync("llama3-mario1", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
+        CreateModelResponse response = await client.CreateModelAsync("llama3-shuaihua", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
         Assert.NotNull(response);
         Assert.Equal("success", response.Status);
@@ -138,7 +138,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     [Fact]
     public async Task PullModelStreaming()
     {
-        string modelName = "all-minilm";
+        string modelName = "codestral";
 
         OllamaClient client = GetTestClient();
 
@@ -153,6 +153,51 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
             //Console.WriteLine(item.Status);
 
             Console.WriteLine($"{item.Completed / item.Total:P2}");
+        }
+    }
+
+    [Fact]
+    public async Task PushModel()
+    {
+        //https://github.com/ollama/ollama/blob/main/docs/import.md Importing (GGUF)
+
+        // 1.Sign - up for ollama.ai
+        //  https://www.ollama.ai/signup
+        // 2.Create a new model
+        //  https://www.ollama.ai/new
+        // 3.Create the model locally with your username as the namespace
+        //  ollama create <ollama-username>/<model-name> -f /path/to/Modelfile
+        // 4.Sign in the ollama account -> Ollama keys -> Add Ollama Public Key
+        // 5. open id_******.pub on your local, copy and past to Ollama key
+        // 6. Push the model
+
+        string name = "shuaihuadu/phi3:list";
+
+        OllamaClient client = GetTestClient();
+
+        PushModelResponse response = await client.PushModelAsync(name);
+
+        Assert.NotNull(response);
+    }
+
+    [Fact]
+    public async Task PushModelStreaming()
+    {
+        string name = "shuaihuadu/phi3:list";
+
+        OllamaClient client = GetTestClient();
+
+        await client.PushModelStreamingAsync(name);
+
+        StreamingResponse<PushModelResponse> response = await client.PushModelStreamingAsync(name);
+
+        Assert.NotNull(response);
+
+        await foreach (var item in response)
+        {
+            Assert.NotEmpty(item.Status);
+
+            Console.WriteLine(item.Status);
         }
     }
 

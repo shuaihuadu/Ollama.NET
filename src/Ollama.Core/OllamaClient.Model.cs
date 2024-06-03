@@ -574,7 +574,8 @@ public sealed partial class OllamaClient
 
     /// <summary>
     /// Upload a model to a model library. Requires registering for ollama.ai and adding a public key first. <br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/> <br />
+    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/import.md"/>
     /// </summary>
     /// <param name="request">The push model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
@@ -602,7 +603,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for push model faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for push model faild. Request content: {Request}, Response content: {responseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }

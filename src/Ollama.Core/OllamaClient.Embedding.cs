@@ -42,7 +42,7 @@ public sealed partial class OllamaClient
 
             EmbeddingResponse? response = responseContent.FromJson<EmbeddingResponse>();
 
-            return response is null || response.Embedding is null || response.Embedding.Value.IsEmpty
+            return response is null || response.Embedding.IsEmpty
                 ? throw new DeserializationException(responseContent, message: $"The generate embedding response content: '{responseContent}' cannot be deserialize to an instance of {nameof(EmbeddingResponse)}.", innerException: null)
                 : response;
         }

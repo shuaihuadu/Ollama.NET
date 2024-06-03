@@ -10,8 +10,7 @@ public class GenerateEmbeddingTests(ITestOutputHelper output) : OllamaClientBase
         EmbeddingResponse response = await client.GenerateEmbeddingAsync("all-minilm", "Hello Embedding!");
 
         Assert.NotNull(response);
-        Assert.NotNull(response.Embedding);
-        Assert.True(response.Embedding.HasValue);
-        Assert.Equal(384, response.Embedding.Value.Length);
+        Assert.False(response.Embedding.IsEmpty);
+        Assert.Equal(384, response.Embedding.Length);
     }
 }
