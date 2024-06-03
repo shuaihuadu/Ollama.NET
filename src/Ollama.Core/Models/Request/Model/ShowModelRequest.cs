@@ -4,7 +4,7 @@
 /// The request for show model informration. <br />
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#show-model-information"/>
 /// </summary>
-internal class ShowModelRequest
+internal sealed class ShowModelRequest
 {
     /// <summary>
     /// The model name

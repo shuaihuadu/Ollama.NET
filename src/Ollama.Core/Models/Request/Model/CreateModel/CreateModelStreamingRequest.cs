@@ -1,8 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
-/// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/>
-/// </summary>
+
+/// <inheritdoc />
 internal sealed class CreateModelStreamingRequest : CreateModelRequestBase
 {
     /// <summary>

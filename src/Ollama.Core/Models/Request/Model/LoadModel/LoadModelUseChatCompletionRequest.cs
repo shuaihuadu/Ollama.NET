@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// The request for preload the model using the chat endpoint.
+/// The request for preload the model using the chat endpoint. <br />
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
 /// </summary>
 internal sealed class LoadModelUseChatCompletionRequest : LoadModelRequestBase

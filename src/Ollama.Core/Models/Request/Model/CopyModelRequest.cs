@@ -3,7 +3,7 @@
 /// <summary>
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#copy-a-model"/>
 /// </summary>
-public sealed class CopyModelRequest
+internal sealed class CopyModelRequest
 {
     /// <summary>
     /// The source model name.
@@ -14,6 +14,7 @@ public sealed class CopyModelRequest
     /// <summary>
     /// The model name of destination.
     /// </summary>
+    [JsonPropertyName("destination")]
     public required string Destination { get; set; }
 
     /// <summary>

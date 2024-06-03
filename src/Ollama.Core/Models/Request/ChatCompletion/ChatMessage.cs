@@ -5,10 +5,7 @@
 /// </summary>
 public class ChatMessage
 {
-    public ChatMessage()
-    {
-
-    }
+    public ChatMessage() { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatMessage"/> with role and content.

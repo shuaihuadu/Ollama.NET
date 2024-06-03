@@ -1,5 +1,6 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <inheritdoc />
 internal sealed class PushModelStreamingRequest : PullModelRequestBase
 {
     /// <summary>

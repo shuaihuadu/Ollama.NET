@@ -4,7 +4,7 @@
 /// The request for delete model. <br />
 /// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#delete-a-model"/>
 /// </summary>
-internal class DeleteModelRequest
+internal sealed class DeleteModelRequest
 {
     /// <summary>
     /// The model name
