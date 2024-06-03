@@ -11,8 +11,4 @@
 		<PackageReference Include="System.Memory.Data" Version="8.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Helper\" />
-	</ItemGroup>
-
 </Project>

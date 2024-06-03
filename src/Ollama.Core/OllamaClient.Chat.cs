@@ -40,7 +40,7 @@ public sealed partial class OllamaClient
     /// <param name="request">The data for this completions request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>Streaming <see cref="ChatMessage"/> list of completion result replied by the model</returns>
-    public async Task<StreamingResponse<ChatCompletionResponse>> ChatCompletionStreamingAsync(ChatCompletionStreamingRequest request, CancellationToken cancellationToken = default)
+    private async Task<StreamingResponse<ChatCompletionResponse>> ChatCompletionStreamingAsync(ChatCompletionStreamingRequest request, CancellationToken cancellationToken = default)
     {
         this._logger.LogDebug("Chat completion streaming");
 
@@ -73,7 +73,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     /// <returns>Chat message replied by the model</returns>
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
-    public async Task<ChatCompletionResponse> ChatCompletionAsync(ChatCompletionRequest request, CancellationToken cancellationToken = default)
+    private async Task<ChatCompletionResponse> ChatCompletionAsync(ChatCompletionRequest request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Model, nameof(request.Model));
