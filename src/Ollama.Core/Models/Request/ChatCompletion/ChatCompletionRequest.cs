@@ -5,18 +5,14 @@
 /// </summary>
 internal sealed class ChatCompletionRequest : ChatCompletionRequestBase
 {
-    //public ChatCompletionRequest(ChatCompletionOptions options)
-    //{
-    //    this.Model = options.Model;
-    //    this.Messages = options.Messages;
-    //    this.Format = options.Format;
-    //    this.KeepAlive = options.KeepAlive;
-    //    this.Options = options.Options;
-    //}
+    /// <inheritdoc />
+    public ChatCompletionRequest() { }
 
-    /// <summary>
-    /// If false the response will be returned as a single response object, rather than a stream of objects
-    /// </summary>
-    [JsonPropertyName("stream")]
-    public bool Stream => false;
+    /// <inheritdoc />
+    [SetsRequiredMembers]
+    public ChatCompletionRequest(string model, ChatMessageHistory messages, bool stream) : base(model, messages, stream) { }
+
+    /// <inheritdoc />
+    [SetsRequiredMembers]
+    public ChatCompletionRequest(ChatCompletionOptions options) : base(options) { }
 }
