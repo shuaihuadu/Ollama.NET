@@ -30,7 +30,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNullOrWhiteSpace(request.Model, nameof(request.Model));
         Argument.AssertNotNullOrWhiteSpace(request.Prompt, nameof(request.Prompt));
 
-        this._logger.LogDebug("Generate embedding: {request}", request.AsJson());
+        this._logger.LogDebug("Generate embedding: {Model}", request.Model);
 
         try
         {
@@ -38,7 +38,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Generate embedding response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Generate embedding response content: {ResponseContent}", responseContent);
 
             EmbeddingResponse? response = responseContent.FromJson<EmbeddingResponse>();
 
@@ -48,7 +48,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for generate embedding faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for generate embedding faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }

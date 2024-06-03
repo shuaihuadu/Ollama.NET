@@ -42,7 +42,7 @@ public sealed partial class OllamaClient
     private async Task<bool> CheckBlobExistsAsync(CheckBlobExistsRequest request, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(request, nameof(request));
-        Argument.AssertNotNullOrEmpty(request.Digest, nameof(request.Digest));
+        Argument.AssertNotNullOrWhiteSpace(request.Digest, nameof(request.Digest));
 
         this._logger.LogDebug("Check blob exists: {Digest}", request.Digest);
 
@@ -52,7 +52,7 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Check blob exists response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Check blob exists response content: {ResponseContent}", responseContent);
 
             return HttpResponseMessage.StatusCode == HttpStatusCode.OK;
         }
@@ -63,7 +63,7 @@ public sealed partial class OllamaClient
                 return false;
             }
 
-            this._logger.LogError(ex, "Check blob exists faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Check blob exists faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -93,13 +93,13 @@ public sealed partial class OllamaClient
 
             requestMessage.Content = content;
 
-            (HttpResponseMessage HttpResponseMessage, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Create blob response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Create blob response content: {ResponseContent}", responseContent);
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Create blob faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Create blob faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }

@@ -42,7 +42,7 @@ public sealed partial class OllamaClient
     /// <returns>Streaming <see cref="ChatMessage"/> list of completion result replied by the model</returns>
     private async Task<StreamingResponse<ChatCompletionResponse>> ChatCompletionStreamingAsync(ChatCompletionStreamingRequest request, CancellationToken cancellationToken = default)
     {
-        this._logger.LogDebug("Chat completion streaming");
+        this._logger.LogDebug("Chat completion streaming: {Model}", request.Model);
 
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Model, nameof(request.Model));
@@ -54,13 +54,13 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Chat completion streaming response content: {responseContent}", response.ResponseContent);
+            this._logger.LogTrace("Chat completion streaming response content: {ResponseContent}", response.ResponseContent);
 
             return StreamingResponse<ChatCompletionResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<ChatCompletionResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for chat completion streaming faild. Request:{Request} ,Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for chat completion streaming faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -79,7 +79,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNullOrWhiteSpace(request.Model, nameof(request.Model));
         Argument.AssertNotNullOrEmpty(request.Messages, nameof(request.Messages));
 
-        this._logger.LogDebug("Chat completion");
+        this._logger.LogDebug("Chat completion: {Model}", request.Model);
 
         try
         {
@@ -87,7 +87,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Chat completion response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Chat completion response content: {ResponseContent}", responseContent);
 
             ChatCompletionResponse? chatCompletion = responseContent.FromJson<ChatCompletionResponse>();
 
@@ -97,7 +97,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for chat completion faild. Request:{Request} ,Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for chat completion faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }

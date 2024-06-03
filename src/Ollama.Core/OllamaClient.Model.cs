@@ -266,7 +266,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("List model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("List model response content: {ResponseContent}", responseContent);
 
             ListModelResponse? models = responseContent.FromJson<ListModelResponse>();
 
@@ -276,7 +276,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for list model faild. {Message}", ex.Message);
+            this._logger.LogError(ex, "Request for list model faild. Response content: {ResponseContent}, Message: {Message}", ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -300,7 +300,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Create model streaming: {name}", request.Name);
+        this._logger.LogDebug("Create model streaming: {Name}", request.Name);
 
         try
         {
@@ -308,13 +308,13 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string ResponseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Create model response content: {responseContent}", response.ResponseContent);
+            this._logger.LogTrace("Create model streaming response content: {ResponseContent}", response.ResponseContent);
 
             return StreamingResponse<CreateModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<CreateModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for create model streaming faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
+            this._logger.LogError(ex, "Request for create model streaming faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -338,7 +338,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Create model: {name}", request.Name);
+        this._logger.LogDebug("Create model: {Name}", request.Name);
 
         try
         {
@@ -346,7 +346,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Create model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Create model response content: {ResponseContent}", responseContent);
 
             CreateModelResponse? createModel = responseContent.FromJson<CreateModelResponse>();
 
@@ -356,7 +356,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for create model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
+            this._logger.LogError(ex, "Request for create model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -376,7 +376,7 @@ public sealed partial class OllamaClient
     {
         Argument.AssertNotNull(request.Model, nameof(request.Model));
 
-        this._logger.LogDebug("Load model: {request}", request.AsJson());
+        this._logger.LogDebug("Load model: {Model}", request.Model);
 
         try
         {
@@ -384,7 +384,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Load model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Load model response content: {ResponseContent}", responseContent);
 
             LoadModelResponse? loadModel = responseContent.FromJson<LoadModelResponse>();
 
@@ -394,7 +394,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for load model faild. Model name: {Name}, Message: {Message}", request.Model, ex.Message);
+            this._logger.LogError(ex, "Request for load model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -411,7 +411,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Show model: {name}", request.Name);
+        this._logger.LogDebug("Show model: {Name}", request.Name);
 
         try
         {
@@ -419,7 +419,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Show model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Show model response content: {ResponseContent}", responseContent);
 
             ShowModelResponse? response = responseContent.FromJson<ShowModelResponse>();
 
@@ -429,7 +429,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for show model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
+            this._logger.LogError(ex, "Request for show model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -447,7 +447,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNullOrWhiteSpace(request.Source, nameof(request.Source));
         Argument.AssertNotNullOrWhiteSpace(request.Destination, nameof(request.Destination));
 
-        this._logger.LogDebug("Copy model: {request}", request.AsJson());
+        this._logger.LogDebug("Copy model: {Source}", request.Source);
 
         try
         {
@@ -455,12 +455,12 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Copy model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Copy model response content: {ResponseContent}", responseContent);
 
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for show model faild. Source model name: {Name}, Message: {Message}", request.Source, ex.Message);
+            this._logger.LogError(ex, "Request for copy model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -478,7 +478,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Delete model: {name}", request.Name);
+        this._logger.LogDebug("Delete model: {Name}", request.Name);
 
         try
         {
@@ -486,11 +486,11 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Delete model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Delete model response content: {ResponseContent}", responseContent);
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for delete model faild. Model name: {Name}, Message: {Message}", request.Name, ex.Message);
+            this._logger.LogError(ex, "Request for delete model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -512,7 +512,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Pull model: {request}", request.AsJson());
+        this._logger.LogDebug("Pull model: {Name}", request.Name);
 
         try
         {
@@ -520,7 +520,7 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Pull model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Pull model response content: {ResponseContent}", responseContent);
 
             PullModelResponse? response = responseContent.FromJson<PullModelResponse>();
 
@@ -530,7 +530,7 @@ public sealed partial class OllamaClient
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for pull model faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for pull model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -552,7 +552,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Pull model streaming: {request}", request.AsJson());
+        this._logger.LogDebug("Pull model streaming: {Name}", request.Name);
 
         try
         {
@@ -560,13 +560,13 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string responseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Pull model streaming response content: {responseContent}", response.responseContent);
+            this._logger.LogTrace("Pull model streaming response content: {ResponseContent}", response.responseContent);
 
             return StreamingResponse<PullModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PullModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for pull model streaming faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for pull model streaming faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -585,7 +585,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Push model: {request}", request.AsJson());
+        this._logger.LogDebug("Push model: {Name}", request.Name);
 
         try
         {
@@ -593,17 +593,17 @@ public sealed partial class OllamaClient
 
             (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Push model response content: {responseContent}", responseContent);
+            this._logger.LogTrace("Push model response content: {ResponseContent}", responseContent);
 
             PushModelResponse? response = responseContent.FromJson<PushModelResponse>();
 
             return response is null || string.IsNullOrWhiteSpace(response.Status)
-                ? throw new DeserializationException(responseContent, message: $"The push model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(PullModelResponse)}.", innerException: null)
+                ? throw new DeserializationException(responseContent, message: $"The push model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(PushModelResponse)}.", innerException: null)
                 : response;
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for push model faild. Request content: {Request}, Response content: {responseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
+            this._logger.LogError(ex, "Request for push model faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
@@ -623,7 +623,7 @@ public sealed partial class OllamaClient
         Argument.AssertNotNull(request, nameof(request));
         Argument.AssertNotNullOrWhiteSpace(request.Name, nameof(request.Name));
 
-        this._logger.LogDebug("Push model streaming: {request}", request.AsJson());
+        this._logger.LogDebug("Push model streaming: {Name}", request.Name);
 
         try
         {
@@ -631,13 +631,13 @@ public sealed partial class OllamaClient
 
             (HttpResponseMessage HttpResponseMessage, string responseContent) response = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            this._logger.LogTrace("Push model streaming response content: {responseContent}", response.responseContent);
+            this._logger.LogTrace("Push model streaming response content: {ResponseContent}", response.responseContent);
 
             return StreamingResponse<PushModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PushModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
-            this._logger.LogError(ex, "Request for push model streaming faild. Request content: {Request}, Message: {Message}", request.AsJson(), ex.Message);
+            this._logger.LogError(ex, "Request for push model streaming faild. Request content: {Request}, Response content: {ResponseContent}, Message: {Message}", request.AsJson(), ex.ResponseContent, ex.Message);
 
             throw;
         }
