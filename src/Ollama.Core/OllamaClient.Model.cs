@@ -374,7 +374,8 @@ public sealed partial class OllamaClient
     /// <exception cref="DeserializationException">When deserialize the response is null.</exception>
     private async Task<LoadModelResponse> LoadModelAsync(LoadModelRequestBase request, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(request.Model, nameof(request.Model));
+        Argument.AssertNotNull(request, nameof(request));
+        Argument.AssertNotNullOrWhiteSpace(request.Model, nameof(request.Model));
 
         this._logger.LogDebug("Load model: {Model}", request.Model);
 
