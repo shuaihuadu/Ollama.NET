@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Converter;
 
+/// <summary>
+/// The chat message role converter, between <see cref="ChatMessageRole"/> and string value.
+/// </summary>
 internal sealed class ChatMessageRoleConverter : JsonConverter<ChatMessageRole?>
 {
     public override ChatMessageRole? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -51,7 +54,7 @@ internal sealed class ChatMessageRoleConverter : JsonConverter<ChatMessageRole?>
         }
         else
         {
-            throw new JsonException($"Gemini API doesn't support author role: {value}");
+            throw new JsonException($"Ollama API doesn't support author role: {value}");
         }
     }
 }
