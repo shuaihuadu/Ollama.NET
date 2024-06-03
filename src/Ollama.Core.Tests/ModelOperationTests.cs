@@ -138,7 +138,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     [Fact]
     public async Task PullModelStreaming()
     {
-        string modelName = "codestral";
+        string modelName = "all-minilm";
 
         OllamaClient client = GetTestClient();
 
@@ -171,7 +171,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
         // 5. open id_******.pub on your local, copy and past to Ollama key
         // 6. Push the model
 
-        string name = "shuaihuadu/phi3:list";
+        string name = "shuaihuadu/phi3:unittest";
 
         OllamaClient client = GetTestClient();
 
@@ -183,7 +183,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
     [Fact]
     public async Task PushModelStreaming()
     {
-        string name = "shuaihuadu/phi3:list";
+        string name = "shuaihuadu/phi3:unittest";
 
         OllamaClient client = GetTestClient();
 
