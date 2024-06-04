@@ -4,11 +4,6 @@
 internal abstract class GenerateCompletionRequestBase : GenerateCompletionOptions
 {
     /// <summary>  
-    /// Initializes a new instance of the <see cref="GenerateCompletionRequestBase"/> class.  
-    /// </summary>  
-    public GenerateCompletionRequestBase() { }
-
-    /// <summary>  
     /// Initializes a new instance of the <see cref="GenerateCompletionRequestBase"/> class with the specified model and prompt.  
     /// </summary>  
     /// <param name="model">The model name.</param>  

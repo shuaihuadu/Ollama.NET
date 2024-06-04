@@ -4,11 +4,6 @@
 internal abstract class ChatCompletionRequestBase : ChatCompletionOptions
 {
     /// <summary>  
-    /// Initializes a new instance of the <see cref="ChatCompletionRequestBase"/> class.  
-    /// </summary>  
-    public ChatCompletionRequestBase() { }
-
-    /// <summary>  
     /// Initializes a new instance of the <see cref="ChatCompletionRequestBase"/> class with the specified model and messages.  
     /// </summary>  
     /// <param name="model">The model name.</param>  

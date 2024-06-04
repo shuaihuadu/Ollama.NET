@@ -3,8 +3,6 @@
 /// <inheritdoc />
 internal sealed class GenerateCompletionRequest : GenerateCompletionRequestBase
 {
-    /// <inheritdoc />
-    public GenerateCompletionRequest() { }
 
     /// <inheritdoc />
     [SetsRequiredMembers]

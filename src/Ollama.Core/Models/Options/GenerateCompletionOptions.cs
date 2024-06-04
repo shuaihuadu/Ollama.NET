@@ -26,6 +26,7 @@ public class GenerateCompletionOptions
     /// <summary>
     /// The format to return a response in.
     /// Currently the only accepted value is json.
+    /// When format is set to json, the output will always be a well-formed JSON object. It's important to also instruct the model to respond in JSON.
     /// </summary>
     [JsonPropertyName("format")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -66,9 +67,11 @@ public class GenerateCompletionOptions
     public bool Stream { get; protected set; }
 
     /// <summary>
-    /// If true no formatting will be applied to the prompt.You may choose to use the raw parameter if you are specifying a full templated prompt in your request to the API.
+    /// If true no formatting will be applied to the prompt.You may choose to use the raw parameter if you are specifying a full templated prompt in your request to the API.<br />
+    /// In some cases, you may wish to bypass the templating system and provide a full prompt. In this case, you can use the raw parameter to disable templating. Also note that raw mode will not return a context.
     /// </summary>
     [JsonPropertyName("raw")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Raw { get; set; }
 
     /// <summary>

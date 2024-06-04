@@ -20,6 +20,7 @@ public class ChatCompletionOptions
     /// <summary>
     /// The format to return a response in.
     /// Currently the only accepted value is json.
+    /// When format is set to json, the output will always be a well-formed JSON object. It's important to also instruct the model to respond in JSON.
     /// </summary>
     [JsonPropertyName("format")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
