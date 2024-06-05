@@ -59,7 +59,7 @@ public readonly struct ChatMessageRole : IEquatable<ChatMessageRole>
     public static bool operator !=(ChatMessageRole left, ChatMessageRole right) => !(left == right);
 
     /// <inheritdoc/>
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is ChatMessageRole otherRole && this == otherRole;
+    public override bool Equals(object obj) => obj is ChatMessageRole otherRole && this == otherRole;
 
     /// <inheritdoc/>
     public bool Equals(ChatMessageRole other) => string.Equals(this.Label, other.Label, StringComparison.OrdinalIgnoreCase);

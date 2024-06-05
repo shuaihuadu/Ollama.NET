@@ -2,7 +2,7 @@
 
 internal static class Verify
 {
-    internal static void ValidateUrl(string url, bool allowQuery = false, [CallerArgumentExpression(nameof(url))] string? paramName = null)
+    internal static void ValidateUrl(string url, bool allowQuery = false, string paramName = "url")
     {
         Argument.AssertNotNullOrEmpty(url, paramName ?? nameof(url));
 

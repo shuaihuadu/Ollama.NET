@@ -9,7 +9,7 @@ internal abstract class PushModelRequestBase
     /// Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. 
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Allow insecure connections to the library. 

@@ -9,7 +9,7 @@ internal abstract class PullModelRequestBase
     /// Name of the model to pull.
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Allow insecure connections to the library. 

@@ -6,10 +6,8 @@
 internal sealed class ChatCompletionRequest : ChatCompletionRequestBase
 {
     /// <inheritdoc />
-    [SetsRequiredMembers]
     public ChatCompletionRequest(string model, ChatMessageHistory messages, bool stream) : base(model, messages, stream) { }
 
     /// <inheritdoc />
-    [SetsRequiredMembers]
     public ChatCompletionRequest(ChatCompletionOptions options) : base(options) { }
 }

@@ -9,7 +9,7 @@ internal abstract class LoadModelRequestBase
     /// The model name
     /// </summary>
     [JsonPropertyName("model")]
-    public required string Model { get; set; }
+    public string Model { get; set; }
 
     /// <summary>
     /// By default models are kept in memory for 5 minutes before being unloaded.

@@ -9,7 +9,7 @@ internal abstract class CreateModelRequestBase
     /// Name of the model to create.
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Contents of the Modelfile.
@@ -18,13 +18,13 @@ internal abstract class CreateModelRequestBase
     /// </para>
     /// </summary>
     [JsonPropertyName("modelfile")]
-    public string? ModelFileContent { get; set; }
+    public string ModelFileContent { get; set; }
 
     /// <summary>
     /// Path to the Modelfile
     /// </summary>
     [JsonPropertyName("path")]
-    public string? Path { get; set; }
+    public string Path { get; set; }
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

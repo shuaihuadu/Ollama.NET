@@ -9,13 +9,13 @@ public class ChatCompletionOptions
     /// The model name.
     /// </summary>
     [JsonPropertyName("model")]
-    public required string Model { get; set; }
+    public string Model { get; set; }
 
     /// <summary>
     /// The messages of the chat, this can be used to keep a chat memory.
     /// </summary>
     [JsonPropertyName("messages")]
-    public required ChatMessageHistory Messages { get; set; }
+    public ChatMessageHistory Messages { get; set; }
 
     /// <summary>
     /// The format to return a response in.

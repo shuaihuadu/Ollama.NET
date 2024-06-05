@@ -30,7 +30,7 @@ internal static class HttpClientExtensions
             string? responseContent = null;
             try
             {
-                responseContent = await response!.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                responseContent = await response!.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 response.EnsureSuccessStatusCode();
             }

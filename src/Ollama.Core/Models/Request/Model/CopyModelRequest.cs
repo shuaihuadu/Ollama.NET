@@ -9,13 +9,13 @@ internal sealed class CopyModelRequest
     /// The source model name.
     /// </summary>
     [JsonPropertyName("source")]
-    public required string Source { get; set; }
+    public string Source { get; set; }
 
     /// <summary>
     /// The model name of destination.
     /// </summary>
     [JsonPropertyName("destination")]
-    public required string Destination { get; set; }
+    public string Destination { get; set; }
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

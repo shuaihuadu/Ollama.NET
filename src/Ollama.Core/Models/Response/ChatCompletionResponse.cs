@@ -9,5 +9,5 @@ public class ChatCompletionResponse : CompletionDoneResponseBase
     /// The messages of the chat, this can be used to keep a chat memory
     /// </summary>
     [JsonPropertyName("message")]
-    public ChatMessage? Message { get; set; }
+    public ChatMessage Message { get; set; }
 }

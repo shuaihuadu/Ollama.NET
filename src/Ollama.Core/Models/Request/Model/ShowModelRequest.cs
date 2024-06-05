@@ -10,7 +10,7 @@ internal sealed class ShowModelRequest
     /// The model name
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

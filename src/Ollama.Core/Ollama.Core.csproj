@@ -1,18 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<!--<Nullable>enable</Nullable>-->
+		<LangVersion>latest</LangVersion>
+		<NoWarn>$(NoWarn);</NoWarn>
 	</PropertyGroup>
+
+  <Import Project="$(SolutionDir)/nuget/nuget-package.props" />
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
 		<PackageReference Include="System.Memory.Data" Version="8.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Models\Response\ListRunningModel\" />
-	</ItemGroup>
+	<PropertyGroup>
+		<!-- NuGet Package Settings -->
+		<Title>Ollama.NET</Title>
+		<Description>The Ollama for .NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.</Description>
+	</PropertyGroup>
 
 </Project>

@@ -9,12 +9,12 @@ internal sealed class GenerateEmbeddingRequest
     /// Name of model to generate embeddings from.
     /// </summary>
     [JsonPropertyName("model")]
-    public required string Model { get; set; }
+    public string Model { get; set; }
     /// <summary>
     /// Text to generate embeddings for.
     /// </summary>
     [JsonPropertyName("prompt")]
-    public required string Prompt { get; set; }
+    public string Prompt { get; set; }
 
     /// <summary>
     /// Controls how long the model will stay loaded into memory following the request (default: 5m)

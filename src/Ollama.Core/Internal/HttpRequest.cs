@@ -2,6 +2,8 @@
 
 internal static class HttpRequest
 {
+    private static readonly HttpMethod PatchMethod = new("PATCH");
+
     public static HttpRequestMessage CreateGetRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Get, url, payload);
 
     public static HttpRequestMessage CreatePostRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Post, url, payload);
@@ -10,7 +12,7 @@ internal static class HttpRequest
 
     public static HttpRequestMessage CreatePutRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Put, url, payload);
 
-    public static HttpRequestMessage CreatePatchRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Patch, url, payload);
+    public static HttpRequestMessage CreatePatchRequest(string url, object? payload = null) => CreateRequest(PatchMethod, url, payload);
 
     public static HttpRequestMessage CreateDeleteRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Delete, url, payload);
     public static HttpRequestMessage CreateHeadRequest(string url, object? payload = null) => CreateRequest(HttpMethod.Head, url, payload);

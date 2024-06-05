@@ -9,13 +9,13 @@ internal sealed class CreateBlobRequest
     /// The SHA256 digest of the blob.
     /// </summary>
     [JsonIgnore]
-    public required string Digest { get; set; }
+    public string Digest { get; set; }
 
     /// <summary>
     /// The file content to create a blob.
     /// </summary>
     [JsonIgnore]
-    public required byte[] Content { get; set; }
+    public byte[] Content { get; set; }
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

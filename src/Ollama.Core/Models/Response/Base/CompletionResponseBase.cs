@@ -6,7 +6,7 @@ public abstract class CompletionResponseBase
     /// The model name.
     /// </summary>
     [JsonPropertyName("model")]
-    public required string Model { get; set; }
+    public string Model { get; set; }
 
     /// <summary>
     /// Gets the timestamp associated with generation activity for this completions response.

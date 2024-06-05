@@ -1,0 +1,56 @@
+<Project>
+	<PropertyGroup>
+		<!-- Central version prefix - applies to all nuget packages. -->
+		<VersionPrefix>1.0.0</VersionPrefix>
+
+		<PackageVersion Condition="'$(VersionSuffix)' != ''">$(VersionPrefix)-$(VersionSuffix)</PackageVersion>
+		<PackageVersion Condition="'$(VersionSuffix)' == ''">$(VersionPrefix)</PackageVersion>
+
+		<Configurations>Debug;Release;Publish</Configurations>
+		<IsPackable>true</IsPackable>
+
+		<!-- Package validation. Baseline Version should be lower or equal to current version. -->
+		<PackageValidationBaselineVersion>1.10.0</PackageValidationBaselineVersion>
+		<!-- Validate assembly attributes only for Publish builds -->
+		<NoWarn Condition="'$(Configuration)' != 'Publish'">$(NoWarn);CP0003</NoWarn>
+		<!-- Do not validate reference assemblies -->
+		<NoWarn>$(NoWarn);CP1002</NoWarn>
+
+		<!-- Default description and tags. Packages can override. -->
+		<Authors>ShuaiHua Du</Authors>
+		<Company>ShuaiHua Du</Company>
+		<Product>Ollama.NET</Product>
+		<Description>The Ollama for .NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.</Description>
+		<PackageTags>LLM,AI, Artificial Intelligence, SDK</PackageTags>
+		<PackageId>$(AssemblyName)</PackageId>
+
+		<!-- Required license, copyright, and repo information. Packages can override. -->
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>© ShuaiHua Du. All rights reserved.</Copyright>
+		<PackageProjectUrl>https://github.com/shuaihuadu/Ollama.NET</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/shuaihuadu/Ollama.NET</RepositoryUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+		<!-- Use icon and NUGET readme from dotnet/nuget folder -->
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageIconUrl>icon.png</PackageIconUrl>
+		<PackageReadmeFile>NUGET.md</PackageReadmeFile>
+
+		<!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+		<!-- Include the XML documentation file in the NuGet package. -->
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Include icon.png and NUGET.md in the project. -->
+		<None Include="$(SolutionDir)/nuget/icon.png" Link="icon.png" Pack="true" PackagePath="." />
+		<None Include="$(SolutionDir)/nuget/NUGET.md" Link="NUGET.md" Pack="true" PackagePath="." />
+	</ItemGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+</Project>
