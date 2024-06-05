@@ -5,7 +5,7 @@ public class GenerateEmbeddingTests(ITestOutputHelper output) : OllamaClientBase
     [Fact]
     public async Task GenerateEmbedding()
     {
-        OllamaClient client = GetTestClient();
+        using OllamaClient client = GetTestClient();
 
         EmbeddingResponse response = await client.GenerateEmbeddingAsync("all-minilm", "Hello Embedding!");
 

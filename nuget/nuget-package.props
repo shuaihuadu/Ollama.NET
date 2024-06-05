@@ -21,7 +21,7 @@
 		<Company>ShuaiHua Du</Company>
 		<Product>Ollama.NET</Product>
 		<Description>The Ollama for .NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.</Description>
-		<PackageTags>LLM,AI, Artificial Intelligence, SDK</PackageTags>
+		<PackageTags>Ollama,LLM,AI, Artificial Intelligence,SDK</PackageTags>
 		<PackageId>$(AssemblyName)</PackageId>
 
 		<!-- Required license, copyright, and repo information. Packages can override. -->
