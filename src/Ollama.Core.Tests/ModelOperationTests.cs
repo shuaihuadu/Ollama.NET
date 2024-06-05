@@ -80,7 +80,28 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         foreach (var model in models.Models)
         {
+            Assert.NotEmpty(model.Model);
             Assert.NotEmpty(model.Name);
+
+            //Console.WriteLine(model.Model);
+            //Console.WriteLine(model.Name);
+        }
+    }
+
+    [Fact]
+    public async Task ListRunningModels()
+    {
+        OllamaClient client = GetTestClient();
+
+        ListRunningModelResponse models = await client.ListRunningModelsAsync();
+
+        foreach (var model in models.Models)
+        {
+            Assert.NotEmpty(model.Model);
+            Assert.NotEmpty(model.Name);
+
+            //Console.WriteLine(model.Model);
+            //Console.WriteLine(model.Name);
         }
     }
 

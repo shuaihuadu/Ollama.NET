@@ -10,18 +10,35 @@ public class ListModelItem
     /// </summary>
     [JsonPropertyName("name")]
     public string Name { get; set; } = null!;
+    /// <summary>
+    /// The model name.
+    /// </summary>
+    [JsonPropertyName("model")]
+    public string Model { get; set; } = null!;
 
     /// <summary>
-    /// The
+    /// The model last modified time.
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTimeOffset ModifiedAt { get; set; }
+
+    /// <summary>
+    /// The model last modified time.
+    /// </summary>
+    [JsonPropertyName("expires_at")]
+    public DateTimeOffset ExpiresAt { get; set; }
 
     /// <summary>
     /// The model size in byte.
     /// </summary>
     [JsonPropertyName("size")]
     public long Size { get; set; }
+
+    /// <summary>
+    /// The model VRAM size in byte.
+    /// </summary>
+    [JsonPropertyName("size_vram")]
+    public long SizeVram { get; set; }
 
     /// <summary>
     /// The model SHA256 digest.

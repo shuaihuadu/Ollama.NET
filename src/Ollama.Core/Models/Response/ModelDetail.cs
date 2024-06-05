@@ -18,7 +18,7 @@ public class ModelDetail
     /// The model families.
     /// </summary>
     [JsonPropertyName("families")]
-    public List<string>? Families { get; set; }
+    public string[]? Families { get; set; }
 
     /// <summary>
     /// The model parameter size.

@@ -1,11 +1,10 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// The request for list models. <br />
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#list-local-models"/>
-/// <code>ollama list</code>
+/// The request for list running models. <br />
+/// <code>ollama ps</code>
 /// </summary>
-internal sealed class ListModelRequest
+internal sealed class ListRunningModelRequest
 {
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.
@@ -13,6 +12,6 @@ internal sealed class ListModelRequest
     /// <returns></returns>
     public HttpRequestMessage ToHttpRequestMessage()
     {
-        return HttpRequest.CreateGetRequest("api/tags");
+        return HttpRequest.CreateGetRequest("api/ps");
     }
 }

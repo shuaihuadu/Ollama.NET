@@ -281,6 +281,36 @@ public sealed partial class OllamaClient
     }
 
     /// <summary>
+    /// List running models.
+    /// </summary>
+    /// <returns>The running models.</returns>
+    public async Task<ListRunningModelResponse> ListRunningModelsAsync(CancellationToken cancellationToken = default)
+    {
+        this._logger.LogDebug("Listing running models");
+
+        try
+        {
+            using HttpRequestMessage requestMessage = new ListRunningModelRequest().ToHttpRequestMessage();
+
+            (_, string responseContent) = await this.ExecuteHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+            this._logger.LogTrace("List model response content: {ResponseContent}", responseContent);
+
+            ListRunningModelResponse? models = responseContent.FromJson<ListRunningModelResponse>();
+
+            return models is null
+                ? throw new DeserializationException(responseContent, message: $"The list running model response content: '{responseContent}' cannot be deserialize to an instance of {nameof(ListRunningModelResponse)}.", innerException: null)
+                : models;
+        }
+        catch (HttpOperationException ex)
+        {
+            this._logger.LogError(ex, "Request for list running model faild. Response content: {ResponseContent}, Message: {Message}", ex.ResponseContent, ex.Message);
+
+            throw;
+        }
+    }
+
+    /// <summary>
     /// Create a model from a Modelfile with streaming response.<br />
     /// It is recommended to set modelfile to the content of the Modelfile rather than just set path. 
     /// This is a requirement for remote create. 
