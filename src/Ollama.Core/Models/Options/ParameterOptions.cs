@@ -94,63 +94,93 @@ public class ParameterOptions
     [JsonPropertyName("top_p")]
     public double TopP { get; set; } = 0.9f;
 
-    //TODO Comments
+    /// <summary>
+    /// The number of generated sequences to keep. This parameter determines how many of the top output sequences are retained during text generation.
+    /// </summary>
     [JsonPropertyName("num_keep")]
     public int NumKeep { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Typical sampling probability. This parameter controls the diversity of text generation by selecting words with typical probabilities.
+    /// </summary>
     [JsonPropertyName("typical_p")]
     public double TypicalP { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Presence penalty coefficient. Used to reduce the generation of repeated words; higher values penalize words that have already appeared.
+    /// </summary>
     [JsonPropertyName("presence_penalty")]
     public double PresencePenalty { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Frequency penalty coefficient. Used to reduce the generation of high-frequency words; higher values penalize frequently occurring words.
+    /// </summary>
     [JsonPropertyName("frequency_penalty")]
     public double FrequencyPenalty { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Newline penalty. This parameter decides whether to penalize the generation of new newline characters to control the format of the output text.
+    /// </summary>
     [JsonPropertyName("penalize_newline")]
     public bool PenalizeNewline { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// NUMA (Non-Uniform Memory Access) node configuration. This parameter is used to specify the NUMA nodes utilized during model execution to optimize memory access performance.
+    /// </summary>
     [JsonPropertyName("numa")]
     public bool Numa { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Batch size. This parameter determines the amount of data processed by the model in one go.
+    /// </summary>
     [JsonPropertyName("num_batch")]
     public int NumBatch { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Number of GPUs used. This parameter specifies the number of GPUs utilized for model training or inference.
+    /// </summary>
     [JsonPropertyName("num_gpu")]
     public int NumGpu { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Main GPU index. This parameter specifies the GPU index used for primary computation tasks.
+    /// </summary>
     [JsonPropertyName("main_gpu")]
     public int MainGpu { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Low VRAM mode. When enabled, this parameter optimizes memory usage to suit environments with limited VRAM.
+    /// </summary>
     [JsonPropertyName("low_vram")]
     public bool LowVram { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Use half-precision (FP16) for storing key-value pairs. When enabled, the model stores key-value pairs in 16-bit floating-point format to reduce memory usage.
+    /// </summary>
     [JsonPropertyName("f16_kv")]
     public bool F16Kv { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Vocabulary-only mode. When enabled, the model will generate only words from the vocabulary, suitable for specific tasks.
+    /// </summary>
     [JsonPropertyName("vocab_only")]
     public bool VocabOnly { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Use memory-mapped files. When enabled, the model utilizes memory-mapped files to optimize loading and running large models.
+    /// </summary>
     [JsonPropertyName("use_mmap")]
     public bool UseMmap { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Use memory locking. When enabled, the model locks memory to prevent data from being swapped to disk, enhancing performance.
+    /// </summary>
     [JsonPropertyName("use_mlock")]
     public bool UseMlock { get; set; }
 
-    //TODO Comments
+    /// <summary>
+    /// Number of threads. This parameter specifies the number of threads used for model computation to optimize parallel processing capabilities.
+    /// </summary>
     [JsonPropertyName("num_thread")]
     public int NumThread { get; set; }
 }

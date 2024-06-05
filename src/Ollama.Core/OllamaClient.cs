@@ -47,6 +47,7 @@ public sealed partial class OllamaClient : IDisposable
         : this(endpoint, loggerFactory)
     {
         this._httpClient = httpClient;
+        this._httpClient.BaseAddress = endpoint;
         this._endpoint = endpoint;
     }
 

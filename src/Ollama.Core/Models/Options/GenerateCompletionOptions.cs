@@ -21,7 +21,7 @@ public class GenerateCompletionOptions
     /// </summary>
     [JsonPropertyName("images")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<string>? Images { get; set; }
+    public string[]? Images { get; set; }
 
     /// <summary>
     /// The format to return a response in.
@@ -58,7 +58,7 @@ public class GenerateCompletionOptions
     /// </summary>
     [JsonPropertyName("context")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<int>? Context { get; set; }
+    public long[]? Context { get; set; }
 
     /// <summary>
     /// If false the response will be returned as a single response object, rather than a stream of objects

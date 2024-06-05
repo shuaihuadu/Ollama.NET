@@ -4,6 +4,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 {
     const string llama3 = "llama3";
     const string mistral = "mistral";
+    const string llava = "llava";
 
     [Fact]
     public async Task GenerateCompletion()
@@ -150,6 +151,53 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(options);
 
         Console.WriteLine(response.Response);
+    }
+
+    [Fact]
+    public async Task GenerateCompletion_WithImages()
+    {
+        using HttpClient httpClient = new()
+        {
+            Timeout = TimeSpan.FromSeconds(600)
+        };
+
+        using OllamaClient client = new(httpClient, Endpoint, LoggerFactory);
+
+        byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
+
+        GenerateCompletionOptions options = new()
+        {
+            Model = llava,
+            Prompt = "What is in this picture?",
+            Images = [Convert.ToBase64String(bytes)]
+        };
+
+        GenerateCompletionResponse response = await client.GenerateCompletionAsync(options);
+
+        Console.WriteLine(response.Response);
+    }
+
+
+    [Fact]
+    public async Task GenerateCompletion_WithContext()
+    {
+        using OllamaClient client = GetTestClient();
+
+        GenerateCompletionResponse response1 = await client.GenerateCompletionAsync(llama3, "Hello! I'm Sam! 24 years old.");
+
+        Console.WriteLine(response1.Response);
+
+        GenerateCompletionResponse response2 = await client.GenerateCompletionAsync(new GenerateCompletionOptions
+        {
+            Model = llama3,
+            Prompt = "What is my age?",
+            Context = response1.Context
+        });
+
+        Console.WriteLine(response2.Response);
+
+        Assert.Contains("24", response2.Response);
+
     }
 
     private static void Asserts(GenerateCompletionResponse response)
