@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The embedding response.
+/// </summary>
 public sealed class EmbeddingResponse
 {
     /// <summary>

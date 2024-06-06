@@ -1,16 +1,13 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The create model response.
+/// </summary>
 public class CreateModelResponse
 {
-    [JsonConstructor]
-    internal CreateModelResponse(string status)
-    {
-        this.Status = status;
-    }
-
     /// <summary>
     /// Gets the content fragment associated with this update.
     /// </summary>
     [JsonPropertyName("status")]
-    public string Status { get; }
+    public string? Status { get; }
 }

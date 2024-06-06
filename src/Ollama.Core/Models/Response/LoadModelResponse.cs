@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The load model response.
+/// </summary>
 public class LoadModelResponse : CompletionResponseBase
 {
     [JsonConstructor]
@@ -19,5 +22,5 @@ public class LoadModelResponse : CompletionResponseBase
     /// Gets the content fragment associated with this update.
     /// </summary>
     [JsonPropertyName("response")]
-    public string Response { get; }
+    public string? Response { get; }
 }

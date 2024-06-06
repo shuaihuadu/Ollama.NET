@@ -63,6 +63,7 @@ public sealed partial class OllamaClient : IDisposable
 
     }
 
+    /// <inheritdoc />
     public void Dispose() => this._httpClient.Dispose();
 
     private static Uri SanitizeEndpoint(string endpoint, int? port = null)

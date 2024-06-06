@@ -5,6 +5,9 @@
 /// </summary>
 public class ModelDetail
 {
+    /// <summary>
+    /// The model file format.
+    /// </summary>
     [JsonPropertyName("format")]
     public string? Format { get; set; }
 

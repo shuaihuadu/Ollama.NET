@@ -1,12 +1,15 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The pull model response.
+/// </summary>
 public sealed class PullModelResponse
 {
     /// <summary>
     /// The pull status of the model.
     /// </summary>
     [JsonPropertyName("status")]
-    public string Status { get; set; } = null!;
+    public string? Status { get; set; }
 
     /// <summary>
     /// The SHA256 digest of the blob

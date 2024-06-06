@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The generation completion response.
+/// </summary>
 public class GenerateCompletionResponse : CompletionDoneResponseBase
 {
     [JsonConstructor]
@@ -33,7 +36,7 @@ public class GenerateCompletionResponse : CompletionDoneResponseBase
     /// Gets the content fragment associated with this update.
     /// </summary>
     [JsonPropertyName("response")]
-    public string Response { get; }
+    public string? Response { get; }
 
     /// <summary>
     /// An encoding of the conversation used in this response, this can be sent in the next request to keep a conversational memory

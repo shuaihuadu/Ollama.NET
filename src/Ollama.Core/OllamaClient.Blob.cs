@@ -21,6 +21,7 @@ public sealed partial class OllamaClient
     /// Create a blob from a file on the server. Returns the server file path.
     /// </summary>
     /// <param name="digest">The SHA256 digest of the blob.</param>
+    /// <param name="content">The blob file content.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     public async Task CreateBlobAsync(string digest, byte[] content, CancellationToken cancellationToken = default)
     {

@@ -32,6 +32,9 @@ public class ShowModelResponse
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Template { get; set; }
 
+    /// <summary>
+    /// The model details.
+    /// </summary>
     [JsonPropertyName("details")]
     public ModelDetail? Details { get; set; }
 }

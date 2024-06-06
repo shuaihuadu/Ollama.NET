@@ -74,7 +74,7 @@ public sealed partial class OllamaClient
     /// Load the speficied model into memory use generate completion endpoint. <br />
     /// If you are using the API you can preload a model by sending the Ollama server an empty request. <br />
     /// This works with both the /api/generate and /api/chat API endpoints.<br />
-    /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
     /// </summary>
     /// <param name="model">The model name.</param>
     /// <param name="keepAlive">
@@ -98,7 +98,7 @@ public sealed partial class OllamaClient
     /// Load the speficied model into memory use chat completion endpoint. <br />
     /// If you are using the API you can preload a model by sending the Ollama server an empty request. <br />
     /// This works with both the /api/generate and /api/chat API endpoints.<br />
-    /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
     /// </summary>
     /// <param name="model">The model name.</param>
     /// <param name="keepAlive">
@@ -165,7 +165,7 @@ public sealed partial class OllamaClient
     /// <summary>
     /// Download a model from the ollama library. <br />
     /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
     /// </summary>
     /// <param name="name">Name of the model to pull.</param>
     /// <param name="insecure">
@@ -189,7 +189,7 @@ public sealed partial class OllamaClient
     /// <summary>
     /// Download a model from the ollama library with streaming. <br />
     /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
     /// </summary>
     /// <param name="name">Name of the model to pull.</param>
     /// <param name="insecure">
@@ -212,7 +212,7 @@ public sealed partial class OllamaClient
 
     /// <summary>
     /// Upload a model to a model library. Requires registering for ollama.ai and adding a public key first. <br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
     /// </summary>
     /// <param name="name">Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. </param>
     /// <param name="insecure">
@@ -232,7 +232,7 @@ public sealed partial class OllamaClient
 
     /// <summary>
     /// Upload a model to a model library with streaming. Requires registering for ollama.ai and adding a public key first. <br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
     /// </summary>
     /// <param name="name">Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. </param>
     /// <param name="insecure">
@@ -316,8 +316,8 @@ public sealed partial class OllamaClient
     /// This is a requirement for remote create. 
     /// Remote model creation must also create any file blobs, fields such as FROM and ADAPTER, explicitly with the server using Create a Blob and the value to the path indicated in the response.<br />
     /// <list type="bullet">
-    /// <item><see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/><br /></item>
-    /// <item><see cref="https://github.com/ollama/ollama/blob/main/docs/modelfile.md"/></item>
+    /// <item><a href="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/><br /></item>
+    /// <item><a href="https://github.com/ollama/ollama/blob/main/docs/modelfile.md"/></item>
     /// </list>
     /// </summary>
     /// <param name="request">The create model request.</param>
@@ -354,8 +354,8 @@ public sealed partial class OllamaClient
     /// This is a requirement for remote create. 
     /// Remote model creation must also create any file blobs, fields such as FROM and ADAPTER, explicitly with the server using Create a Blob and the value to the path indicated in the response.<br />
     /// <list type="bullet">
-    /// <item><see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/><br /></item>
-    /// <item><see cref="https://github.com/ollama/ollama/blob/main/docs/modelfile.md"/></item>
+    /// <item><a href="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/><br /></item>
+    /// <item><a href="https://github.com/ollama/ollama/blob/main/docs/modelfile.md"/></item>
     /// </list>
     /// </summary>
     /// <param name="request">The create model request.</param>
@@ -394,7 +394,7 @@ public sealed partial class OllamaClient
     /// Load the speficied model into memory. <br />
     /// If you are using the API you can preload a model by sending the Ollama server an empty request. <br />
     /// This works with both the /api/generate and /api/chat API endpoints.<br />
-    /// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
     /// </summary>
     /// <param name="request">The load model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
@@ -528,7 +528,7 @@ public sealed partial class OllamaClient
     /// <summary>
     /// Download a model from the ollama library. <br />
     /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
     /// </summary>
     /// <param name="request">The pull model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
@@ -568,7 +568,7 @@ public sealed partial class OllamaClient
     /// <summary>
     /// Download a model from the ollama library streaming. <br />
     /// Cancelled pulls are resumed from where they left off, and multiple calls will share the same download progress.<br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
     /// </summary>
     /// <param name="request">The pull model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
@@ -603,8 +603,8 @@ public sealed partial class OllamaClient
 
     /// <summary>
     /// Upload a model to a model library. Requires registering for ollama.ai and adding a public key first. <br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/> <br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/import.md"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/> <br />
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/import.md"/>
     /// </summary>
     /// <param name="request">The push model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
@@ -641,7 +641,7 @@ public sealed partial class OllamaClient
     /// <summary>
     /// Upload a model to a model library streaming. <br />
     /// Requires registering for ollama.ai and adding a public key first. <br />
-    /// <seealso cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+    /// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
     /// </summary>
     /// <param name="request">The push model request.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
