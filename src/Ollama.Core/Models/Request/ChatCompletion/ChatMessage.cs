@@ -5,6 +5,9 @@
 /// </summary>
 public class ChatMessage
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChatMessage"/>.
+    /// </summary>
     public ChatMessage() { }
 
     /// <summary>
@@ -24,7 +27,7 @@ public class ChatMessage
     /// <param name="role">Role of the chat of the message.</param>
     /// <param name="content">The chat message content.</param>
     /// <param name="images">A list of base64-encoded images(for multimodal models such as llava).</param>
-    public ChatMessage(ChatMessageRole role, string content, List<string> images)
+    public ChatMessage(ChatMessageRole role, string content, string[] images)
         : this(role, content)
     {
         Images = images;
@@ -41,14 +44,14 @@ public class ChatMessage
     /// The chat message content.
     /// </summary>
     [JsonPropertyName("content")]
-    public string? Content { get; set; }
+    public string Content { get; set; } = null!;
 
     /// <summary>
     /// A list of base64-encoded images(for multimodal models such as llava).
     /// </summary>
     [JsonPropertyName("images")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<string>? Images { get; set; }
+    public string[]? Images { get; set; }
 
     /// <inheritdoc/>
     public override string ToString()

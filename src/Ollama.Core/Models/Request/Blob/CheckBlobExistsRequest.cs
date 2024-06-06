@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model
 /// </summary>
 internal sealed class CheckBlobExistsRequest
 {
@@ -9,7 +9,7 @@ internal sealed class CheckBlobExistsRequest
     /// The SHA256 digest of the blob
     /// </summary>
     [JsonIgnore]
-    public string Digest { get; set; }
+    public string Digest { get; set; } = null!;
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

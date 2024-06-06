@@ -2,10 +2,6 @@ namespace Ollama.Core.Tests;
 
 public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
 {
-    const string llama3 = "llama3";
-    const string mistral = "mistral";
-    const string llava = "llava";
-
     [Fact]
     public async Task GenerateCompletion()
     {

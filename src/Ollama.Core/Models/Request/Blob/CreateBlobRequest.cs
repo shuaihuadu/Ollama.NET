@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model
 /// </summary>
 internal sealed class CreateBlobRequest
 {
@@ -9,13 +9,13 @@ internal sealed class CreateBlobRequest
     /// The SHA256 digest of the blob.
     /// </summary>
     [JsonIgnore]
-    public string Digest { get; set; }
+    public string Digest { get; set; } = null!;
 
     /// <summary>
     /// The file content to create a blob.
     /// </summary>
     [JsonIgnore]
-    public byte[] Content { get; set; }
+    public byte[] Content { get; set; } = null!;
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

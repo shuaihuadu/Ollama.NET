@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The chat message history.
+/// </summary>
 public class ChatMessageHistory : IList<ChatMessage>, IReadOnlyList<ChatMessage>
 {
     private readonly List<ChatMessage> _messages;
@@ -53,14 +56,21 @@ public class ChatMessageHistory : IList<ChatMessage>, IReadOnlyList<ChatMessage>
     /// <summary>
     /// Add a system message to the chat message history
     /// </summary>
-    /// <param name="content">Message content.</param>
+    /// <param name="systemMessage">Message content.</param>
     public void AddSystemMessage(string systemMessage) => this.AddMessage(ChatMessageRole.System, systemMessage);
 
     /// <summary>
     /// Add a user message to the chat message history.
     /// </summary>
     /// <param name="content">Message content.</param>
-    public void AddUserMessage(string conetent) => this.AddMessage(ChatMessageRole.User, conetent);
+    public void AddUserMessage(string content) => this.AddMessage(ChatMessageRole.User, content);
+
+    /// <summary>
+    /// Add a user message with images to the chat message history.
+    /// </summary>
+    /// <param name="content">Message content.</param>
+    /// <param name="images">Images in message.</param>
+    public void AddUserMessage(string content, string[] images) => this.Add(new ChatMessage(ChatMessageRole.User, content, images));
 
     /// <summary>
     /// Add a <see cref="ChatMessage"/> to the message history.

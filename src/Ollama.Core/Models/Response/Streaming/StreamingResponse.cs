@@ -61,6 +61,7 @@ public class StreamingResponse<T> : IDisposable, IAsyncEnumerable<T>
         GC.SuppressFinalize(this);
     }
 
+    /// <inheritdoc />
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposedValue)

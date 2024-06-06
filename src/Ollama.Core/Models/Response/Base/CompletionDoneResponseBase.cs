@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Models.Base;
 
+/// <summary>
+/// The completion done response base.
+/// </summary>
 public abstract class CompletionDoneResponseBase : CompletionResponseBase
 {
     /// <summary>

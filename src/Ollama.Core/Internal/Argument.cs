@@ -107,7 +107,7 @@ internal static class Argument
         return value;
     }
 
-    public static void AssertNull<T>(T value, string name, string message = null)
+    public static void AssertNull<T>(T value, string name, string? message = null)
     {
         if (value != null)
         {

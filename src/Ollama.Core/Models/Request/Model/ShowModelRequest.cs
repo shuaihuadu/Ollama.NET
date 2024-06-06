@@ -2,7 +2,7 @@
 
 /// <summary>
 /// The request for show model informration. <br />
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#show-model-information"/>
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#show-model-information"/>
 /// </summary>
 internal sealed class ShowModelRequest
 {
@@ -10,7 +10,7 @@ internal sealed class ShowModelRequest
     /// The model name
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

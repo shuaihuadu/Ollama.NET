@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#copy-a-model"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#copy-a-model
 /// </summary>
 internal sealed class CopyModelRequest
 {
@@ -9,13 +9,13 @@ internal sealed class CopyModelRequest
     /// The source model name.
     /// </summary>
     [JsonPropertyName("source")]
-    public string Source { get; set; }
+    public string Source { get; set; } = null!;
 
     /// <summary>
     /// The model name of destination.
     /// </summary>
     [JsonPropertyName("destination")]
-    public string Destination { get; set; }
+    public string Destination { get; set; } = null!;
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.

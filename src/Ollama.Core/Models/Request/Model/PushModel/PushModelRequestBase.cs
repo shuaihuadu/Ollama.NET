@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-model"/>
 /// </summary>
 internal abstract class PushModelRequestBase
 {
@@ -9,7 +9,7 @@ internal abstract class PushModelRequestBase
     /// Name of the model to push in the form of &lt;namespace&gt;/&lt;model&gt;:&lt;tag&gt;. 
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// Allow insecure connections to the library. 

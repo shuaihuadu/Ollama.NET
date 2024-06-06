@@ -2,7 +2,7 @@
 
 /// <summary>
 /// The <seealso cref="ParameterOptions"/> defines parameters that can be set when the model is run. <br />
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values"/>
+/// https://github.com/ollama/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values
 /// </summary>
 public class ParameterOptions
 {

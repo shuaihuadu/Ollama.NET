@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model"/>
 /// </summary>
 internal abstract class PullModelRequestBase
 {
@@ -9,7 +9,7 @@ internal abstract class PullModelRequestBase
     /// Name of the model to pull.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// Allow insecure connections to the library. 

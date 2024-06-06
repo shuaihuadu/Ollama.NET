@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion
 /// </summary>
 internal sealed class ChatCompletionRequest : ChatCompletionRequestBase
 {

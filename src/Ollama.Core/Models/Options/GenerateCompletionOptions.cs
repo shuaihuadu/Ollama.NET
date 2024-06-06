@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion
 /// </summary>
 public class GenerateCompletionOptions
 {
@@ -9,19 +9,19 @@ public class GenerateCompletionOptions
     /// The model name.
     /// </summary>
     [JsonPropertyName("model")]
-    public string Model { get; set; }
+    public string Model { get; set; } = null!;
     /// <summary>
     /// The prompt to generate a response for.
     /// </summary>
     [JsonPropertyName("prompt")]
-    public string Prompt { get; set; }
+    public string Prompt { get; set; } = null!;
 
     /// <summary>
     /// A list of base64-encoded images(for multimodal models such as llava).
     /// </summary>
     [JsonPropertyName("images")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string[] Images { get; set; }
+    public string[]? Images { get; set; }
 
     /// <summary>
     /// The format to return a response in.
@@ -37,28 +37,28 @@ public class GenerateCompletionOptions
     /// </summary>
     [JsonPropertyName("options")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ParameterOptions Options { get; set; }
+    public ParameterOptions? Options { get; set; }
 
     /// <summary>
     /// System message to (overrides what is defined in the Modelfile).
     /// </summary>
     [JsonPropertyName("system")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string System { get; set; }
+    public string? System { get; set; }
 
     /// <summary>
     /// The prompt template to use(overrides what is defined in the Modelfile).
     /// </summary>
     [JsonPropertyName("template")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string Template { get; set; }
+    public string? Template { get; set; }
 
     /// <summary>
     /// The context parameter returned from a previous request to /generate, this can be used to keep a short conversational memory.
     /// </summary>
     [JsonPropertyName("context")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public long[] Context { get; set; }
+    public long[]? Context { get; set; }
 
     /// <summary>
     /// If false the response will be returned as a single response object, rather than a stream of objects

@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Models;
 
+/// <summary>
+/// The list mode response.
+/// </summary>
 public sealed class ListModelResponse
 {
     /// <summary>

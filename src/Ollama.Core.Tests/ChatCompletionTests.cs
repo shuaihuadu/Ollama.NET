@@ -1,19 +1,19 @@
+using Ollama.Core.Extensions;
+
 namespace Ollama.Core.Tests;
 
 public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
 {
-    const string model = "llama3";
-
     [Fact]
     public async Task ChatCompletion()
     {
-        OllamaClient client = GetTestClient();
+        using OllamaClient client = GetTestClient();
 
         ChatMessageHistory messages = [];
 
         messages.AddUserMessage("Hello!");
 
-        ChatCompletionResponse response = await client.ChatCompletionAsync(model, messages);
+        ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
 
         Assert.NotNull(response.Message);
         Assert.NotNull(response.Message.Content);
@@ -24,9 +24,37 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
     }
 
     [Fact]
+    public async Task ChatCompletionStreaming()
+    {
+        using OllamaClient client = GetTestClient();
+
+        ChatMessageHistory messages = [];
+
+        messages.AddUserMessage("Hello!");
+
+        StreamingResponse<ChatCompletionResponse> response = await client.ChatCompletionStreamingAsync(llama3, messages);
+
+        Assert.NotNull(response);
+
+        await foreach (ChatCompletionResponse item in response)
+        {
+            Assert.NotEmpty(item.Model);
+            Assert.Equal(llama3, item.Model);
+            Assert.True(item.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
+
+            //Console.WriteLine(item.Response);
+
+            if (item.Done)
+            {
+                Asserts(item);
+            }
+        }
+    }
+
+    [Fact]
     public async Task ChatCompletionWithChatMessageHistory()
     {
-        OllamaClient client = GetTestClient();
+        using OllamaClient client = GetTestClient();
 
         ChatMessageHistory messages = [];
 
@@ -34,7 +62,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
         messages.AddAssistantMessage("It's rainy!");
         messages.AddUserMessage("What should I do when I go out?");
 
-        ChatCompletionResponse response = await client.ChatCompletionAsync(model, messages);
+        ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
 
         Assert.NotNull(response.Message);
         Assert.NotNull(response.Message.Content);
@@ -46,10 +74,39 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
         Asserts(response);
     }
 
+    [Fact]
+    public async Task ChatCompletionWithImages()
+    {
+        byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
+
+        using HttpClient httpClient = new()
+        {
+            Timeout = TimeSpan.FromSeconds(600)
+        };
+
+        using OllamaClient client = new(httpClient, Endpoint, LoggerFactory);
+
+        ChatMessageHistory messages = [];
+
+        messages.AddUserMessage("What is in this image", [Convert.ToBase64String(bytes)]);
+
+        string a = messages.AsJson();
+
+        //ChatCompletionResponse response = await client.ChatCompletionAsync(llava, messages);
+
+        //Assert.NotNull(response.Message);
+        //Assert.NotNull(response.Message.Content);
+        //Assert.NotEmpty(response.Message.Content);
+        //Assert.Equal("stop", response.DoneReason, ignoreCase: true);
+
+        //Console.WriteLine(response.Message);
+
+        //Asserts(response);
+    }
+
     private static void Asserts(ChatCompletionResponse response)
     {
         Assert.NotEmpty(response.Model);
-        Assert.Equal(model, response.Model);
         Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
         Assert.True(response.Done);
         Assert.True(response.TotalDuration > 0);

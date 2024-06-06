@@ -2,7 +2,6 @@
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<!--<Nullable>enable</Nullable>-->
 		<LangVersion>latest</LangVersion>
 		<NoWarn>$(NoWarn);</NoWarn>
 	</PropertyGroup>
@@ -19,6 +18,7 @@
 		<PackageId>Ollama.NET</PackageId>
 		<Title>Ollama.NET</Title>
 		<Description>The Ollama for .NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.</Description>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion
 /// </summary>
 public class ChatCompletionOptions
 {
@@ -9,13 +9,13 @@ public class ChatCompletionOptions
     /// The model name.
     /// </summary>
     [JsonPropertyName("model")]
-    public string Model { get; set; }
+    public string Model { get; set; } = null!;
 
     /// <summary>
     /// The messages of the chat, this can be used to keep a chat memory.
     /// </summary>
     [JsonPropertyName("messages")]
-    public ChatMessageHistory Messages { get; set; }
+    public ChatMessageHistory Messages { get; set; } = [];
 
     /// <summary>
     /// The format to return a response in.

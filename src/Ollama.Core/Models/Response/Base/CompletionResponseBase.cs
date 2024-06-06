@@ -1,12 +1,15 @@
 ﻿namespace Ollama.Core.Models.Base;
 
+/// <summary>
+/// The completion response base.
+/// </summary>
 public abstract class CompletionResponseBase
 {
     /// <summary>
     /// The model name.
     /// </summary>
     [JsonPropertyName("model")]
-    public string Model { get; set; }
+    public string? Model { get; set; }
 
     /// <summary>
     /// Gets the timestamp associated with generation activity for this completions response.

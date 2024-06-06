@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/faq.md"/>
+/// https://github.com/ollama/ollama/blob/main/docs/faq.md
 /// </summary>
 internal abstract class LoadModelRequestBase
 {
@@ -9,7 +9,7 @@ internal abstract class LoadModelRequestBase
     /// The model name
     /// </summary>
     [JsonPropertyName("model")]
-    public string Model { get; set; }
+    public string Model { get; set; } = null!;
 
     /// <summary>
     /// By default models are kept in memory for 5 minutes before being unloaded.

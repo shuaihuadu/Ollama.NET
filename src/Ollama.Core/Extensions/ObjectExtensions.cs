@@ -1,5 +1,8 @@
 ﻿namespace Ollama.Core.Extensions;
 
+/// <summary>
+/// The extensions.
+/// </summary>
 public static class ObjectExtensions
 {
     private static readonly JsonSerializerOptions jsonSerializerOptions = new()

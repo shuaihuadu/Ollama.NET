@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-embeddings"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#generate-embeddings
 /// </summary>
 internal sealed class GenerateEmbeddingRequest
 {
@@ -9,12 +9,12 @@ internal sealed class GenerateEmbeddingRequest
     /// Name of model to generate embeddings from.
     /// </summary>
     [JsonPropertyName("model")]
-    public string Model { get; set; }
+    public string Model { get; set; } = null!;
     /// <summary>
     /// Text to generate embeddings for.
     /// </summary>
     [JsonPropertyName("prompt")]
-    public string Prompt { get; set; }
+    public string Prompt { get; set; } = null!;
 
     /// <summary>
     /// Controls how long the model will stay loaded into memory following the request (default: 5m)

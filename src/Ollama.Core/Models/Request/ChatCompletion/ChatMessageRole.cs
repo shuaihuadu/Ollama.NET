@@ -1,8 +1,10 @@
-﻿namespace Ollama.Core.Models;
+﻿
+namespace Ollama.Core.Models;
 
 /// <summary>
 /// A description of the intended purpose of a message within a chat completions interaction.
 /// </summary>
+//[JsonConverter(typeof(ChatMessageRoleConverter))]
 public readonly struct ChatMessageRole : IEquatable<ChatMessageRole>
 {
     /// <summary>
@@ -59,8 +61,7 @@ public readonly struct ChatMessageRole : IEquatable<ChatMessageRole>
     public static bool operator !=(ChatMessageRole left, ChatMessageRole right) => !(left == right);
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatMessageRole otherRole && this == otherRole;
-
+    public override bool Equals(object? obj) => base.Equals(obj);
     /// <inheritdoc/>
     public bool Equals(ChatMessageRole other) => string.Equals(this.Label, other.Label, StringComparison.OrdinalIgnoreCase);
 

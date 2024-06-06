@@ -2,7 +2,7 @@
 
 /// <summary>
 /// The request for delete model. <br />
-/// <see cref="https://github.com/ollama/ollama/blob/main/docs/api.md#delete-a-model"/>
+/// https://github.com/ollama/ollama/blob/main/docs/api.md#delete-a-model
 /// </summary>
 internal sealed class DeleteModelRequest
 {
@@ -10,7 +10,7 @@ internal sealed class DeleteModelRequest
     /// The model name
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// To the <see cref="HttpRequestMessage"/>  for send a http request.
