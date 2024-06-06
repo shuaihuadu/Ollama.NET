@@ -94,17 +94,6 @@ public class ParameterOptions
     [JsonPropertyName("top_p")]
     public double TopP { get; set; } = 0.9f;
 
-    /// <summary>
-    /// The number of generated sequences to keep. This parameter determines how many of the top output sequences are retained during text generation.
-    /// </summary>
-    [JsonPropertyName("num_keep")]
-    public int NumKeep { get; set; }
-
-    /// <summary>
-    /// Typical sampling probability. This parameter controls the diversity of text generation by selecting words with typical probabilities.
-    /// </summary>
-    [JsonPropertyName("typical_p")]
-    public double TypicalP { get; set; }
 
     /// <summary>
     /// Presence penalty coefficient. Used to reduce the generation of repeated words; higher values penalize words that have already appeared.
@@ -119,68 +108,94 @@ public class ParameterOptions
     public double FrequencyPenalty { get; set; }
 
     /// <summary>
+    /// The number of generated sequences to keep. This parameter determines how many of the top output sequences are retained during text generation.
+    /// </summary>
+    [JsonPropertyName("num_keep")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public int NumKeep { get; set; }
+
+    /// <summary>
+    /// Typical sampling probability. This parameter controls the diversity of text generation by selecting words with typical probabilities.
+    /// </summary>
+    [JsonPropertyName("typical_p")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public double TypicalP { get; set; }
+
+    /// <summary>
     /// Newline penalty. This parameter decides whether to penalize the generation of new newline characters to control the format of the output text.
     /// </summary>
     [JsonPropertyName("penalize_newline")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool PenalizeNewline { get; set; }
 
     /// <summary>
-    /// NUMA (Non-Uniform Memory Access) node configuration. This parameter is used to specify the NUMA nodes utilized during model execution to optimize memory access performance.
+    /// NUMA (Non-Uniform Memory Access) node configuration. This parameter is used to specify the NUMA nodes utilized during model execution to optimize memory access performance. <br />
+    /// Invalid parameter for argument chat completion
     /// </summary>
     [JsonPropertyName("numa")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Numa { get; set; }
 
     /// <summary>
     /// Batch size. This parameter determines the amount of data processed by the model in one go.
     /// </summary>
     [JsonPropertyName("num_batch")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int NumBatch { get; set; }
 
     /// <summary>
     /// Number of GPUs used. This parameter specifies the number of GPUs utilized for model training or inference.
     /// </summary>
     [JsonPropertyName("num_gpu")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int NumGpu { get; set; }
 
     /// <summary>
     /// Main GPU index. This parameter specifies the GPU index used for primary computation tasks.
     /// </summary>
     [JsonPropertyName("main_gpu")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int MainGpu { get; set; }
 
     /// <summary>
     /// Low VRAM mode. When enabled, this parameter optimizes memory usage to suit environments with limited VRAM.
     /// </summary>
     [JsonPropertyName("low_vram")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool LowVram { get; set; }
 
     /// <summary>
     /// Use half-precision (FP16) for storing key-value pairs. When enabled, the model stores key-value pairs in 16-bit floating-point format to reduce memory usage.
     /// </summary>
     [JsonPropertyName("f16_kv")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool F16Kv { get; set; }
 
     /// <summary>
     /// Vocabulary-only mode. When enabled, the model will generate only words from the vocabulary, suitable for specific tasks.
     /// </summary>
     [JsonPropertyName("vocab_only")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool VocabOnly { get; set; }
 
     /// <summary>
     /// Use memory-mapped files. When enabled, the model utilizes memory-mapped files to optimize loading and running large models.
     /// </summary>
     [JsonPropertyName("use_mmap")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool UseMmap { get; set; }
 
     /// <summary>
     /// Use memory locking. When enabled, the model locks memory to prevent data from being swapped to disk, enhancing performance.
     /// </summary>
     [JsonPropertyName("use_mlock")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool UseMlock { get; set; }
 
     /// <summary>
     /// Number of threads. This parameter specifies the number of threads used for model computation to optimize parallel processing capabilities.
     /// </summary>
     [JsonPropertyName("num_thread")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int NumThread { get; set; }
 }

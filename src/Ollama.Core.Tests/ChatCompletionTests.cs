@@ -108,12 +108,34 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ParameterOptions parameterOptions = new()
         {
+            NumKeep = 5,
+            Seed = 42,
+            NumPredict = 100,
+            TopK = 20,
+            TopP = 0.9,
+            TfsZ = 0.5,
+            TypicalP = 0.7,
+            RepeatLastN = 33,
             Temperature = 0.8,
             RepeatPenalty = 1.2,
             PresencePenalty = 1.5,
             FrequencyPenalty = 1.0,
-            Stop = ["stop_sequences"],
-            NumCtx = 2048
+            Mirostat = 1,
+            MirostatTau = 0.8,
+            MirostatEta = 0.6,
+            PenalizeNewline = true,
+            Stop = ["\n", "user"],
+            Numa = false,
+            NumCtx = 2048,
+            NumBatch = 2,
+            NumGpu = 0,
+            MainGpu = 0,
+            LowVram = true,
+            F16Kv = true,
+            VocabOnly = true,
+            UseMmap = true,
+            UseMlock = true,
+            NumThread = 8
         };
 
         ChatMessageHistory messages = [];
@@ -126,7 +148,6 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         messages.AddUserMessage("User: I love history and philosophy, I'd like to learn something new about Greece, any suggestion?");
 
-
         ChatCompletionOptions options = new()
         {
             Model = llama3,
@@ -134,8 +155,19 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
             Messages = messages
         };
 
-        //ChatCompletionResponse response = await client.ChatCompletionAsync(options);
-        ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
+        ChatCompletionResponse response = await client.ChatCompletionAsync(options);
+
+        Asserts(response);
+
+        StreamingResponse<ChatCompletionResponse> streamingResponse = await client.ChatCompletionStreamingAsync(options);
+
+        await foreach (var item in streamingResponse)
+        {
+            if (item.Done)
+            {
+                Asserts(item);
+            }
+        }
 
         Console.WriteLine(response.Message);
     }
