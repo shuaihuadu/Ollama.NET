@@ -7,7 +7,7 @@ public class BlobOperationTests(ITestOutputHelper output) : OllamaClientBaseTest
     [InlineData("sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", false)]
     public async Task CheckBlobExists(string digest, bool exists)
     {
-        OllamaClient client = GetTestClient();
+        using OllamaClient client = GetTestClient();
 
         bool result = await client.CheckBlobExistsAsync(digest);
 
@@ -24,7 +24,7 @@ public class BlobOperationTests(ITestOutputHelper output) : OllamaClientBaseTest
 
         string digest = "sha256:fa304d6750612c207b8705aca35391761f29492534e90b30575e4980d6ca82f6";
 
-        OllamaClient client = GetTestClient();
+        using OllamaClient client = GetTestClient();
 
         byte[] content = await File.ReadAllBytesAsync(filePath);
 

@@ -51,7 +51,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
     }
 
     [Fact]
-    public async Task ChatCompletionWithChatMessageHistory()
+    public async Task ChatCompletion_WithChatMessageHistory()
     {
         using OllamaClient client = GetTestClient();
 
@@ -74,7 +74,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
     }
 
     [Fact]
-    public async Task ChatCompletionWithImages()
+    public async Task ChatCompletion_WithImages()
     {
         byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
 
@@ -99,6 +99,45 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
         Console.WriteLine(response.Message);
 
         Asserts(response);
+    }
+
+    [Fact]
+    public async Task ChatCompletion_WithOptions()
+    {
+        using OllamaClient client = GetTestClient();
+
+        ParameterOptions parameterOptions = new()
+        {
+            Temperature = 0.8,
+            RepeatPenalty = 1.2,
+            PresencePenalty = 1.5,
+            FrequencyPenalty = 1.0,
+            Stop = ["stop_sequences"],
+            NumCtx = 2048
+        };
+
+        ChatMessageHistory messages = [];
+
+        messages.AddSystemMessage("You are a librarian, expert about books");
+
+        messages.AddUserMessage("Hi, I'm looking for book suggestions");
+
+        messages.AddAssistantMessage("Sure, I'd be happy to help! What kind of books are you interested in? Fiction or non-fiction? Any particular genre?");
+
+        messages.AddUserMessage("User: I love history and philosophy, I'd like to learn something new about Greece, any suggestion?");
+
+
+        ChatCompletionOptions options = new()
+        {
+            Model = llama3,
+            Options = parameterOptions,
+            Messages = messages
+        };
+
+        //ChatCompletionResponse response = await client.ChatCompletionAsync(options);
+        ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
+
+        Console.WriteLine(response.Message);
     }
 
     private static void Asserts(ChatCompletionResponse response)
