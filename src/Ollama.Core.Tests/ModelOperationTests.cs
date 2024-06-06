@@ -67,6 +67,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         await foreach (var item in response)
         {
+            Assert.NotNull(item.Status);
             Assert.NotEmpty(item.Status);
         }
     }
@@ -169,6 +170,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         await foreach (var item in response)
         {
+            Assert.NotNull(item.Status);
             Assert.NotEmpty(item.Status);
 
             //Console.WriteLine(item.Status);
@@ -216,6 +218,7 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         await foreach (var item in response)
         {
+            Assert.NotNull(item.Status);
             Assert.NotEmpty(item.Status);
 
             Console.WriteLine(item.Status);
@@ -224,9 +227,11 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
     private static void Asserts(LoadModelResponse response)
     {
+        Assert.NotNull(response.Model);
         Assert.NotEmpty(response.Model);
         Assert.Equal(model, response.Model);
         Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
+        Assert.NotNull(response.Response);
         Assert.Empty(response.Response);
         Assert.True(response.Done);
     }

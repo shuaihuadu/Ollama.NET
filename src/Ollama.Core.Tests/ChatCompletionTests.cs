@@ -1,5 +1,3 @@
-using Ollama.Core.Extensions;
-
 namespace Ollama.Core.Tests;
 
 public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
@@ -38,6 +36,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         await foreach (ChatCompletionResponse item in response)
         {
+            Assert.NotNull(item.Model);
             Assert.NotEmpty(item.Model);
             Assert.Equal(llama3, item.Model);
             Assert.True(item.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
@@ -90,22 +89,21 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         messages.AddUserMessage("What is in this image", [Convert.ToBase64String(bytes)]);
 
-        string a = messages.AsJson();
+        ChatCompletionResponse response = await client.ChatCompletionAsync(llava, messages);
 
-        //ChatCompletionResponse response = await client.ChatCompletionAsync(llava, messages);
+        Assert.NotNull(response.Message);
+        Assert.NotNull(response.Message.Content);
+        Assert.NotEmpty(response.Message.Content);
+        Assert.Equal("stop", response.DoneReason, ignoreCase: true);
 
-        //Assert.NotNull(response.Message);
-        //Assert.NotNull(response.Message.Content);
-        //Assert.NotEmpty(response.Message.Content);
-        //Assert.Equal("stop", response.DoneReason, ignoreCase: true);
+        Console.WriteLine(response.Message);
 
-        //Console.WriteLine(response.Message);
-
-        //Asserts(response);
+        Asserts(response);
     }
 
     private static void Asserts(ChatCompletionResponse response)
     {
+        Assert.NotNull(response.Model);
         Assert.NotEmpty(response.Model);
         Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
         Assert.True(response.Done);

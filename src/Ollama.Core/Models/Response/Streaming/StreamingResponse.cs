@@ -7,9 +7,9 @@
 /// <typeparam name="T"> The data type representative of distinct, streamable items. </typeparam>
 public class StreamingResponse<T> : IDisposable, IAsyncEnumerable<T>
 {
-    private HttpResponseMessage _httpResponseMessage { get; } = null!;
-    private IAsyncEnumerable<T> _asyncEnumerableSource { get; } = null!;
-    private bool _disposedValue { get; set; }
+    private HttpResponseMessage HttpResponseMessage { get; } = null!;
+    private IAsyncEnumerable<T> AsyncEnumerableSource { get; } = null!;
+    private bool DisposedValue { get; set; }
 
     private StreamingResponse() { }
 
@@ -17,8 +17,8 @@ public class StreamingResponse<T> : IDisposable, IAsyncEnumerable<T>
         HttpResponseMessage httpResponseMessage,
         Func<HttpResponseMessage, IAsyncEnumerable<T>> asyncEnumerableProcessor)
     {
-        _httpResponseMessage = httpResponseMessage;
-        _asyncEnumerableSource = asyncEnumerableProcessor.Invoke(httpResponseMessage);
+        HttpResponseMessage = httpResponseMessage;
+        AsyncEnumerableSource = asyncEnumerableProcessor.Invoke(httpResponseMessage);
     }
 
     /// <summary>
@@ -64,15 +64,16 @@ public class StreamingResponse<T> : IDisposable, IAsyncEnumerable<T>
     /// <inheritdoc />
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposedValue)
+        if (!DisposedValue)
         {
             if (disposing)
             {
-                this._httpResponseMessage?.Dispose();
+                this.HttpResponseMessage?.Dispose();
             }
-            _disposedValue = true;
+
+            DisposedValue = true;
         }
     }
 
-    IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken) => _asyncEnumerableSource?.GetAsyncEnumerator(cancellationToken)!;
+    IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken) => AsyncEnumerableSource?.GetAsyncEnumerator(cancellationToken)!;
 }

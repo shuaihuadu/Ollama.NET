@@ -9,6 +9,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(llama3, "Hello!");
 
+        Assert.NotNull(response.Response);
         Assert.NotEmpty(response.Response);
 
         Asserts(response);
@@ -25,6 +26,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 
         await foreach (GenerateCompletionResponse item in response)
         {
+            Assert.NotNull(item.Model);
             Assert.NotEmpty(item.Model);
             Assert.Equal(llama3, item.Model);
             Assert.True(item.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
@@ -52,7 +54,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(options);
 
-        Assert.True(response.Response.IsValidJson());
+        Assert.True(response.Response?.IsValidJson());
     }
 
     [Fact]
@@ -198,6 +200,7 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 
     private static void Asserts(GenerateCompletionResponse response)
     {
+        Assert.NotNull(response.Model);
         Assert.NotEmpty(response.Model);
         Assert.Equal(llama3, response.Model);
         Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));

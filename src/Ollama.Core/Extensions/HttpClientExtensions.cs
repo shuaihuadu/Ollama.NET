@@ -14,8 +14,7 @@ internal static class HttpClientExtensions
     /// <returns>The <see cref="HttpResponseMessage"/> representing the response.</returns>
     internal static async Task<HttpResponseMessage> SendWithSuccessCheckAsync(this HttpClient client, HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
     {
-        HttpResponseMessage? response = null;
-
+        HttpResponseMessage? response;
         try
         {
             response = await client.SendAsync(request, completionOption, cancellationToken).ConfigureAwait(false);
