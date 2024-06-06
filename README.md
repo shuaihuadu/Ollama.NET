@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Ollama.NET.svg)](https://www.nuget.org/packages/Ollama.NET)
 
-**The Ollama for .NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.**
+**The Ollama.NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.**
 
 
 # Getting Start 🚀
