@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// https://github.com/ollama/ollama/blob/main/docs/faq.md
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/faq.md" />
 /// </summary>
 internal abstract class LoadModelRequestBase
 {

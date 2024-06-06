@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion" />
 /// </summary>
 public class ChatCompletionOptions
 {

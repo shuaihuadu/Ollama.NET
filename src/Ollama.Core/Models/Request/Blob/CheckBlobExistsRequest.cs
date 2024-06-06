@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#create-a-model" />
 /// </summary>
 internal sealed class CheckBlobExistsRequest
 {

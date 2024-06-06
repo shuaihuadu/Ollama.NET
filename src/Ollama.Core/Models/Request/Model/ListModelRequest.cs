@@ -2,7 +2,7 @@
 
 /// <summary>
 /// The request for list models. <br />
-/// https://github.com/ollama/ollama/blob/main/docs/api.md#list-local-models
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#list-local-models" />
 /// <code>ollama list</code>
 /// </summary>
 internal sealed class ListModelRequest

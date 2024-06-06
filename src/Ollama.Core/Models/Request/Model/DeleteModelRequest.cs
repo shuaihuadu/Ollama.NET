@@ -2,7 +2,7 @@
 
 /// <summary>
 /// The request for delete model. <br />
-/// https://github.com/ollama/ollama/blob/main/docs/api.md#delete-a-model
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#delete-a-model" />
 /// </summary>
 internal sealed class DeleteModelRequest
 {

@@ -1,7 +1,7 @@
 ﻿namespace Ollama.Core.Models;
 
 /// <summary>
-/// https://github.com/ollama/ollama/blob/main/docs/api.md#generate-embeddings
+/// <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-embeddings"/>
 /// </summary>
 internal sealed class GenerateEmbeddingRequest
 {
