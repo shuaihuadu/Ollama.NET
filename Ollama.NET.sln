@@ -11,13 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5346D302-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F122CC9C-7833-4F6F-8789-7B323F8D7C99}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{129538EB-C261-4AB9-B481-2079DBA856F1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{33BBE3D5-4878-47F9-B72F-CBC163526E77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ollama.Core", "src\Ollama.Core\Ollama.Core.csproj", "{D54C3E7B-6D9E-4A9C-8BE2-6C8BEEEC77EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ollama.Core.Tests", "src\Ollama.Core.Tests\Ollama.Core.Tests.csproj", "{3DAE9115-1B79-411B-8F96-C02F550E8E0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{24C09C5E-136C-42F0-AD3A-71090C448BA0}"
+	ProjectSection(SolutionItems) = preProject
+		nuget\nuget-package.props = nuget\nuget-package.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
