@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Ollama.NET.svg)](https://www.nuget.org/packages/Ollama.NET)
 
-**The Ollama for .NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.**
+**The Ollama.NET is a powerful and easy-to-use library designed to simplify the integration of Ollama's services into .NET applications.**
 
 
 # Getting Start 🚀
@@ -131,7 +131,7 @@ StreamingResponse<PullModelResponse> response = await client.PullModelStreamingA
 // 3.Create the model locally with your username as the namespace
 //  ollama create <ollama-username>/<model-name> -f /path/to/Modelfile
 // 4.Sign in the ollama account -> Ollama keys -> Add Ollama Public Key
-// 5. open id_******.pub on your local, copy and past to Ollama key
+// 5. open id_******.pub on your local, copy and paste to Ollama Public key
 // 6. Push the model
 
 PushModelResponse response = await client.PushModelAsync("username/modelname:tag");
