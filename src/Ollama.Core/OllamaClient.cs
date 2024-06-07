@@ -63,6 +63,21 @@ public sealed partial class OllamaClient : IDisposable
 
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OllamaClient"/> class.
+    /// </summary>
+    /// <param name="httpClient">The <see cref="HttpClient"/> instance used for making HTTP requests.</param>
+    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use for logging. If null, no logging will be performed.</param>
+    public OllamaClient(HttpClient httpClient, ILoggerFactory? loggerFactory = null)
+    {
+        Argument.AssertNotNull(httpClient.BaseAddress, nameof(httpClient.BaseAddress));
+        Argument.AssertNotNullOrWhiteSpace(httpClient.BaseAddress!.AbsoluteUri, nameof(httpClient.BaseAddress));
+
+        this._httpClient = httpClient;
+        this._endpoint = httpClient.BaseAddress;
+        this._logger = loggerFactory?.CreateLogger(typeof(OllamaClient)) ?? NullLogger.Instance;
+    }
+
     /// <inheritdoc />
     public void Dispose() => this._httpClient.Dispose();
 
