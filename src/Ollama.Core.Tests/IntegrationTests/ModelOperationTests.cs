@@ -1,4 +1,4 @@
-namespace Ollama.Core.Tests;
+namespace Ollama.Core.Tests.IntegrationTests;
 
 public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
 {

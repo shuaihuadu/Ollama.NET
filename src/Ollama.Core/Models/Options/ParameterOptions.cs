@@ -57,7 +57,7 @@ public class ParameterOptions
     /// For reproducible outputs, set temperature to 0 and seed to a number.
     /// </summary>
     [JsonPropertyName("seed")]
-    public int Seed { get; set; }
+    public long Seed { get; set; }
 
     /// <summary>
     /// Sets the stop sequences to use.When this pattern is encountered the LLM will stop generating text and return.
@@ -93,7 +93,6 @@ public class ParameterOptions
     /// </summary>
     [JsonPropertyName("top_p")]
     public double TopP { get; set; } = 0.9f;
-
 
     /// <summary>
     /// Presence penalty coefficient. Used to reduce the generation of repeated words; higher values penalize words that have already appeared.

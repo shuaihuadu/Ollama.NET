@@ -1,6 +1,6 @@
 using Ollama.Core.Tests.Logging;
 
-namespace Ollama.Core.Tests;
+namespace Ollama.Core.Tests.IntegrationTests;
 
 public abstract class BaseTest
 {
@@ -15,9 +15,9 @@ public abstract class BaseTest
 
     protected BaseTest(ITestOutputHelper output)
     {
-        this.Output = output;
+        Output = output;
 
-        this.LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
+        LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
         {
             builder.SetMinimumLevel(LogLevel.Trace);
             builder.AddProvider(new XunitLoggerProvider(output));
@@ -26,13 +26,13 @@ public abstract class BaseTest
 
     public void WriteLine(object? target = null)
     {
-        this.Output.WriteLine(target?.ToString() ?? string.Empty);
+        Output.WriteLine(target?.ToString() ?? string.Empty);
     }
 
-    public void WriteLine(string? format, params object?[] args) => this.Output.WriteLine(format);// ?? string.Empty, args);
+    public void WriteLine(string? format, params object?[] args) => Output.WriteLine(format);// ?? string.Empty, args);
 
     public void Write(object? target = null)
     {
-        this.Output.WriteLine(target?.ToString() ?? string.Empty);
+        Output.WriteLine(target?.ToString() ?? string.Empty);
     }
 }

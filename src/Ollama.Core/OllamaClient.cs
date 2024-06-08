@@ -34,7 +34,6 @@ public sealed partial class OllamaClient : IDisposable
     public OllamaClient(string endpoint, ILoggerFactory? loggerFactory = null)
         : this(SanitizeEndpoint(endpoint), loggerFactory)
     {
-        Argument.AssertNotNullOrWhiteSpace(endpoint, nameof(endpoint));
     }
 
     /// <summary>
@@ -43,12 +42,18 @@ public sealed partial class OllamaClient : IDisposable
     /// <param name="httpClient">The <see cref="HttpClient"/> instance used for making HTTP requests.</param>
     /// <param name="endpoint">The Ollama serve endpoint.</param>
     /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use for logging. If null, no logging will be performed.</param>
-    public OllamaClient(HttpClient httpClient, Uri endpoint, ILoggerFactory? loggerFactory = null)
-        : this(endpoint, loggerFactory)
+    public OllamaClient(HttpClient? httpClient, Uri? endpoint, ILoggerFactory? loggerFactory = null)
     {
-        this._httpClient = httpClient;
-        this._httpClient.BaseAddress = endpoint;
-        this._endpoint = endpoint;
+        Verify.ValidateHttpClientAndEndpoint(httpClient, endpoint);
+
+        this._httpClient ??= new HttpClient
+        {
+            BaseAddress = endpoint
+        };
+
+        this._httpClient.BaseAddress ??= endpoint;
+        this._endpoint = endpoint ?? this._httpClient.BaseAddress!;
+        this._logger = loggerFactory?.CreateLogger(typeof(OllamaClient)) ?? NullLogger.Instance;
     }
 
     /// <summary>
@@ -57,10 +62,20 @@ public sealed partial class OllamaClient : IDisposable
     /// <param name="httpClient">The <see cref="HttpClient"/> instance used for making HTTP requests.</param>
     /// <param name="endpoint">The Ollama serve endpoint.</param>
     /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use for logging. If null, no logging will be performed.</param>
-    public OllamaClient(HttpClient httpClient, string endpoint, ILoggerFactory? loggerFactory = null)
-        : this(httpClient, SanitizeEndpoint(endpoint), loggerFactory)
+    public OllamaClient(HttpClient? httpClient, string? endpoint, ILoggerFactory? loggerFactory = null)
     {
+        Verify.ValidateHttpClientAndEndpoint(httpClient, endpoint);
 
+        Uri endpointUri = httpClient?.BaseAddress ?? new Uri(endpoint!);
+
+        this._httpClient ??= new HttpClient
+        {
+            BaseAddress = endpointUri
+        };
+
+        this._httpClient.BaseAddress ??= endpointUri;
+        this._endpoint = endpointUri;
+        this._logger = loggerFactory?.CreateLogger(typeof(OllamaClient)) ?? NullLogger.Instance;
     }
 
     /// <summary>
@@ -70,6 +85,7 @@ public sealed partial class OllamaClient : IDisposable
     /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use for logging. If null, no logging will be performed.</param>
     public OllamaClient(HttpClient httpClient, ILoggerFactory? loggerFactory = null)
     {
+        Argument.AssertNotNull(httpClient, nameof(httpClient));
         Argument.AssertNotNull(httpClient.BaseAddress, nameof(httpClient.BaseAddress));
         Argument.AssertNotNullOrWhiteSpace(httpClient.BaseAddress!.AbsoluteUri, nameof(httpClient.BaseAddress));
 
@@ -81,11 +97,11 @@ public sealed partial class OllamaClient : IDisposable
     /// <inheritdoc />
     public void Dispose() => this._httpClient.Dispose();
 
-    private static Uri SanitizeEndpoint(string endpoint, int? port = null)
+    private static Uri SanitizeEndpoint(string? endpoint, int? port = null)
     {
         Verify.ValidateUrl(endpoint);
 
-        UriBuilder builder = new(endpoint);
+        UriBuilder builder = new(endpoint!);
         if (port.HasValue) { builder.Port = port.Value; }
 
         return builder.Uri;
