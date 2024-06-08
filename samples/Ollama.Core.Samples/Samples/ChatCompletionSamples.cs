@@ -1,9 +1,8 @@
-namespace Ollama.Core.Tests.IntegrationTests;
+namespace Ollama.Core.Samples;
 
-public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
+public class ChatCompletionSamples : OllamaClientSampleBase
 {
-    [Fact]
-    public async Task ChatCompletion()
+    public static async Task ChatCompletion()
     {
         using OllamaClient client = GetTestClient();
 
@@ -13,16 +12,11 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
 
-        Assert.NotNull(response.Message);
-        Assert.NotNull(response.Message.Content);
-        Assert.NotEmpty(response.Message.Content);
-        Assert.Equal("stop", response.DoneReason, ignoreCase: true);
-
-        Asserts(response);
+        Console.WriteLine(response.Message?.Content);
     }
 
-    [Fact]
-    public async Task ChatCompletionStreaming()
+
+    public static async Task ChatCompletionStreaming()
     {
         using OllamaClient client = GetTestClient();
 
@@ -32,26 +26,14 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         StreamingResponse<ChatCompletionResponse> response = await client.ChatCompletionStreamingAsync(llama3, messages);
 
-        Assert.NotNull(response);
-
         await foreach (ChatCompletionResponse item in response)
         {
-            Assert.NotNull(item.Model);
-            Assert.NotEmpty(item.Model);
-            Assert.Equal(llama3, item.Model);
-            Assert.True(item.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-
-            //Console.WriteLine(item.Response);
-
-            if (item.Done)
-            {
-                Asserts(item);
-            }
+            Console.WriteLine(item.Message?.Content);
         }
     }
 
-    [Fact]
-    public async Task ChatCompletion_WithChatMessageHistory()
+
+    public static async Task ChatCompletionWithChatMessageHistory()
     {
         using OllamaClient client = GetTestClient();
 
@@ -63,18 +45,11 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
 
-        Assert.NotNull(response.Message);
-        Assert.NotNull(response.Message.Content);
-        Assert.NotEmpty(response.Message.Content);
-        Assert.Equal("stop", response.DoneReason, ignoreCase: true);
-
         Console.WriteLine(response.Message);
-
-        Asserts(response);
     }
 
-    [Fact]
-    public async Task ChatCompletion_WithImages()
+
+    public static async Task ChatCompletionWithImages()
     {
         byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
 
@@ -83,7 +58,7 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
             Timeout = TimeSpan.FromSeconds(600)
         };
 
-        using OllamaClient client = new(httpClient, Endpoint, LoggerFactory);
+        using OllamaClient client = new(httpClient, Endpoint);
 
         ChatMessageHistory messages = [];
 
@@ -91,18 +66,11 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ChatCompletionResponse response = await client.ChatCompletionAsync(llava, messages);
 
-        Assert.NotNull(response.Message);
-        Assert.NotNull(response.Message.Content);
-        Assert.NotEmpty(response.Message.Content);
-        Assert.Equal("stop", response.DoneReason, ignoreCase: true);
-
         Console.WriteLine(response.Message);
-
-        Asserts(response);
     }
 
-    [Fact]
-    public async Task ChatCompletion_WithOptions()
+
+    public static async Task ChatCompletionWithOptions()
     {
         using OllamaClient client = GetTestClient();
 
@@ -157,33 +125,15 @@ public class ChatCompletionTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ChatCompletionResponse response = await client.ChatCompletionAsync(options);
 
-        Asserts(response);
+        Console.WriteLine(response.Message?.Content);
 
         StreamingResponse<ChatCompletionResponse> streamingResponse = await client.ChatCompletionStreamingAsync(options);
 
         await foreach (var item in streamingResponse)
         {
-            if (item.Done)
-            {
-                Asserts(item);
-            }
+            Console.WriteLine(response.Message?.Content);
         }
 
         Console.WriteLine(response.Message);
-    }
-
-    private static void Asserts(ChatCompletionResponse response)
-    {
-        Assert.NotNull(response.Model);
-        Assert.NotEmpty(response.Model);
-        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-        Assert.True(response.Done);
-        Assert.True(response.TotalDuration > 0);
-        Assert.True(response.LoadDuration > 0);
-        //Assert.True(response.PromptEvalCount > 0);
-        //Assert.Equal(0, response.PromptEvalCount);
-        Assert.True(response.PromptEvalDuration > 0);
-        Assert.True(response.EvalCount > 0);
-        Assert.True(response.EvalDuration > 0);
     }
 }

@@ -1,24 +1,18 @@
-namespace Ollama.Core.Tests.IntegrationTests;
+namespace Ollama.Core.Samples;
 
-public class BlobOperationTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
+public class BlobOperationSamples : OllamaClientSampleBase
 {
-    [Theory]
-    [InlineData("sha256:fa304d6750612c207b8705aca35391761f29492534e90b30575e4980d6ca82f6", true)] //
-    [InlineData("sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", false)]
-    public async Task CheckBlobExists(string digest, bool exists)
+    public static async Task CheckBlobExists(string digest)
     {
         using OllamaClient client = GetTestClient();
 
         bool result = await client.CheckBlobExistsAsync(digest);
 
         Console.WriteLine(result);
-
-        Assert.Equal(exists, result);
     }
 
 
-    [Fact]
-    public async Task CreateBlob()
+    public static async Task CreateBlob()
     {
         string filePath = Path.Combine(AppContext.BaseDirectory, "Resources", "ollama-openapi.yaml");
 

@@ -1,79 +1,75 @@
-namespace Ollama.Core.Tests.IntegrationTests;
+namespace Ollama.Core.Samples;
 
-public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
+public class ModelOperationSamples : OllamaClientSampleBase
 {
     const string model = "llama3";
 
-    [Fact]
-    public async Task LoadModelUseGenerateCompletion()
+
+    public static async Task LoadModelUseGenerateCompletion()
     {
         using OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
 
-        Asserts(response);
+        Console.WriteLine(response.Model);
     }
 
-    [Fact]
-    public async Task LoadModelUseChatCompletion()
+
+    public static async Task LoadModelUseChatCompletion()
     {
         using OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.LoadModelUseChatCompletionEndpointAsync(model);
 
-        Asserts(response);
+        Console.WriteLine(response.Model);
     }
 
-    [Fact]
-    public async Task UnloadModelUseGenerateCompletion()
+
+    public static async Task UnloadModelUseGenerateCompletion()
     {
         using OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.UnloadModelUseGenerateCompletionEndpointAsync(model);
 
-        Asserts(response);
+        Console.WriteLine(response.Model);
     }
 
-    [Fact]
-    public async Task UnloadModelUseChatCompletion()
+
+    public static async Task UnloadModelUseChatCompletion()
     {
         using OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.UnloadModelUseChatCompletionEndpointAsync(model);
 
-        Asserts(response);
+        Console.WriteLine(response.Model);
     }
 
-    [Fact]
-    public async Task CreateModel()
+
+    public static async Task CreateModel()
     {
         using OllamaClient client = GetTestClient();
 
         CreateModelResponse response = await client.CreateModelAsync("llama3-shuaihua", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
-        Assert.NotNull(response);
-        Assert.Equal("success", response.Status);
+        Console.WriteLine(response.Status);
     }
 
 
-    [Fact]
-    public async Task CreateModelStreaming()
+
+    public static async Task CreateModelStreaming()
     {
         using OllamaClient client = GetTestClient();
 
         StreamingResponse<CreateModelResponse> response = await client.CreateModelStreamingAsync("llama3-mario2", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
-        Assert.NotNull(response);
-
         await foreach (var item in response)
         {
-            Assert.NotNull(item.Status);
-            Assert.NotEmpty(item.Status);
+            Console.WriteLine(item.Status);
         }
     }
 
-    [Fact]
-    public async Task ListModels()
+
+    public static async Task ListModels()
     {
         using OllamaClient client = GetTestClient();
 
@@ -81,16 +77,13 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         foreach (var model in models.Models)
         {
-            Assert.NotEmpty(model.Model);
-            Assert.NotEmpty(model.Name);
-
-            //Console.WriteLine(model.Model);
-            //Console.WriteLine(model.Name);
+            Console.WriteLine(model.Model);
+            Console.WriteLine(model.Name);
         }
     }
 
-    [Fact]
-    public async Task ListRunningModels()
+
+    public static async Task ListRunningModels()
     {
         using OllamaClient client = GetTestClient();
 
@@ -98,27 +91,24 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         foreach (var model in models.Models)
         {
-            Assert.NotEmpty(model.Model);
-            Assert.NotEmpty(model.Name);
-
-            //Console.WriteLine(model.Model);
-            //Console.WriteLine(model.Name);
+            Console.WriteLine(model.Model);
+            Console.WriteLine(model.Name);
         }
     }
 
-    [Fact]
-    public async Task ShowModel()
+
+    public static async Task ShowModel()
     {
         using OllamaClient client = GetTestClient();
 
         ShowModelResponse response = await client.ShowModelAsync(model);
 
-        Assert.NotNull(response);
+        Console.WriteLine(response.AsJson());
     }
 
 
-    [Fact]
-    public async Task CopyModel()
+
+    public static async Task CopyModel()
     {
         using OllamaClient client = GetTestClient();
 
@@ -126,11 +116,11 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ListModelResponse response = await client.ListModelsAsync();
 
-        Assert.Contains(response.Models, x => x.Name == "llama3-mario1:latest");
+        Console.WriteLine(response.AsJson());
     }
 
-    [Fact]
-    public async Task DeleteModel()
+
+    public static async Task DeleteModel()
     {
         using OllamaClient client = GetTestClient();
 
@@ -138,11 +128,11 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         ListModelResponse response = await client.ListModelsAsync();
 
-        Assert.DoesNotContain(response.Models, x => x.Name == "llama3-mario1:latest");
+        Console.WriteLine(response.AsJson());
     }
 
-    [Fact]
-    public async Task PullModel()
+
+    public static async Task PullModel()
     {
         string modelName = "all-minilm";
 
@@ -152,13 +142,12 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         PullModelResponse response = await client.PullModelAsync(modelName);
 
-        Assert.NotNull(response);
-        Assert.Equal("success", response.Status);
+        Console.WriteLine(response.AsJson());
 
     }
 
-    [Fact]
-    public async Task PullModelStreaming()
+
+    public static async Task PullModelStreaming()
     {
         string modelName = "all-minilm";
 
@@ -170,17 +159,14 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         await foreach (var item in response)
         {
-            Assert.NotNull(item.Status);
-            Assert.NotEmpty(item.Status);
-
-            //Console.WriteLine(item.Status);
+            Console.WriteLine(item.Status);
 
             Console.WriteLine($"{item.Completed / item.Total:P2}");
         }
     }
 
-    [Fact]
-    public async Task PushModel()
+
+    public static async Task PushModel()
     {
         //https://github.com/ollama/ollama/blob/main/docs/import.md Importing (GGUF)
 
@@ -200,11 +186,11 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         PushModelResponse response = await client.PushModelAsync(name);
 
-        Assert.NotNull(response);
+        Console.WriteLine(response.AsJson());
     }
 
-    [Fact]
-    public async Task PushModelStreaming()
+
+    public static async Task PushModelStreaming()
     {
         string name = "shuaihuadu/phi3:unittest";
 
@@ -214,25 +200,10 @@ public class ModelOperationTests(ITestOutputHelper output) : OllamaClientBaseTes
 
         StreamingResponse<PushModelResponse> response = await client.PushModelStreamingAsync(name);
 
-        Assert.NotNull(response);
 
         await foreach (var item in response)
         {
-            Assert.NotNull(item.Status);
-            Assert.NotEmpty(item.Status);
-
             Console.WriteLine(item.Status);
         }
-    }
-
-    private static void Asserts(LoadModelResponse response)
-    {
-        Assert.NotNull(response.Model);
-        Assert.NotEmpty(response.Model);
-        Assert.Equal(model, response.Model);
-        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-        Assert.NotNull(response.Response);
-        Assert.Empty(response.Response);
-        Assert.True(response.Done);
     }
 }

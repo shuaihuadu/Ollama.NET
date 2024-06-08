@@ -1,47 +1,39 @@
-namespace Ollama.Core.Tests.IntegrationTests;
+namespace Ollama.Core.Samples;
 
-public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBaseTest(output)
+public class GenerateCompletionSamples : OllamaClientSampleBase
 {
-    [Fact]
-    public async Task GenerateCompletion()
+
+    public static async Task GenerateCompletion()
     {
         using OllamaClient client = GetTestClient();
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(llama3, "Hello!");
 
-        Assert.NotNull(response.Response);
-        Assert.NotEmpty(response.Response);
+        Console.WriteLine(response.Response);
 
-        Asserts(response);
     }
 
-    [Fact]
-    public async Task GenerateCompletionStreaming()
+    public static async Task GenerateCompletionStreaming()
     {
         using OllamaClient client = GetTestClient();
 
         StreamingResponse<GenerateCompletionResponse> response = await client.GenerateCompletionStreamingAsync(llama3, "Hello!");
 
-        Assert.NotNull(response);
+        Console.WriteLine(response);
 
         await foreach (GenerateCompletionResponse item in response)
         {
-            Assert.NotNull(item.Model);
-            Assert.NotEmpty(item.Model);
-            Assert.Equal(llama3, item.Model);
-            Assert.True(item.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-
-            //Console.WriteLine(item.Response);
+            Console.WriteLine(item.Model);
 
             if (item.Done)
             {
-                Asserts(item);
+                Console.WriteLine(item.AsJson());
             }
         }
     }
 
-    [Fact]
-    public async Task GenerateCompletion_FormatJson()
+
+    public static async Task GenerateCompletion_FormatJson()
     {
         using OllamaClient client = GetTestClient();
 
@@ -54,11 +46,11 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(options);
 
-        Assert.True(response.Response?.IsValidJson());
+        Console.WriteLine(response.Response);
     }
 
-    [Fact]
-    public async Task GenerateCompletion_RawMode()
+
+    public static async Task GenerateCompletion_RawMode()
     {
         //In some cases, you may wish to bypass the templating system and provide a full prompt. In this case, you can use the raw parameter to disable templating. Also note that raw mode will not return a context.
         using OllamaClient client = GetTestClient();
@@ -75,8 +67,8 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
 
     }
 
-    [Fact]
-    public async Task GenerateCompletion_Reproducible_Outputs()
+
+    public static async Task GenerateCompletion_Reproducible_Outputs()
     {
         //For reproducible outputs, set temperature to 0 and seed to a number
 
@@ -96,11 +88,12 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
         GenerateCompletionResponse response1 = await client.GenerateCompletionAsync(options);
         GenerateCompletionResponse response2 = await client.GenerateCompletionAsync(options);
 
-        Assert.Equal(response1.Response, response2.Response);
+        Console.WriteLine(response1.Response);
+        Console.WriteLine(response2.Response);
     }
 
-    [Fact]
-    public async Task GenerateCompletion_WithOptions()
+
+    public static async Task GenerateCompletion_WithOptions()
     {
         //If you want to set custom options for the model at runtime rather than in the Modelfile, you can do so with the options parameter.
         //This example sets every available option, but you can set any of them individually and omit the ones you do not want to override.
@@ -151,15 +144,15 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
         Console.WriteLine(response.Response);
     }
 
-    [Fact]
-    public async Task GenerateCompletion_WithImages()
+
+    public static async Task GenerateCompletion_WithImages()
     {
         using HttpClient httpClient = new()
         {
             Timeout = TimeSpan.FromSeconds(600)
         };
 
-        using OllamaClient client = new(httpClient, Endpoint, LoggerFactory);
+        using OllamaClient client = new(httpClient, Endpoint);
 
         byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
 
@@ -176,8 +169,8 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
     }
 
 
-    [Fact]
-    public async Task GenerateCompletion_WithContext()
+
+    public static async Task GenerateCompletion_WithContext()
     {
         using OllamaClient client = GetTestClient();
 
@@ -193,27 +186,5 @@ public class GenerateCompletionTests(ITestOutputHelper output) : OllamaClientBas
         });
 
         Console.WriteLine(response2.Response);
-
-        Assert.Contains("24", response2.Response);
-
-    }
-
-    private static void Asserts(GenerateCompletionResponse response)
-    {
-        Assert.NotNull(response.Model);
-        Assert.NotEmpty(response.Model);
-        Assert.Equal(llama3, response.Model);
-        Assert.True(response.CreatedAt > new DateTimeOffset(new DateTime(2024, 1, 1)));
-        Assert.True(response.Done);
-        Assert.Equal("stop", response.DoneReason, ignoreCase: true);
-        Assert.NotNull(response.Context);
-        Assert.True(response.Context.Length > 0);
-        Assert.True(response.TotalDuration > 0);
-        Assert.True(response.LoadDuration > 0);
-        //Assert.True(response.PromptEvalCount > 0);
-        //Assert.Equal(0, response.PromptEvalCount);
-        Assert.True(response.PromptEvalDuration > 0);
-        Assert.True(response.EvalCount > 0);
-        Assert.True(response.EvalDuration > 0);
     }
 }

@@ -38,15 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\ollama-openapi.yaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\sk.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="TestData\" />
   </ItemGroup>
 
