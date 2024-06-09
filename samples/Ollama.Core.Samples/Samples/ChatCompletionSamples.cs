@@ -55,10 +55,11 @@ public class ChatCompletionSamples : OllamaClientSampleBase
 
         using HttpClient httpClient = new()
         {
-            Timeout = TimeSpan.FromSeconds(600)
+            Timeout = TimeSpan.FromSeconds(600),
+            BaseAddress = Endpoint
         };
 
-        using OllamaClient client = new(httpClient, Endpoint);
+        using OllamaClient client = new(httpClient);
 
         ChatMessageHistory messages = [];
 

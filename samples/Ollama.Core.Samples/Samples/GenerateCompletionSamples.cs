@@ -149,10 +149,11 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
     {
         using HttpClient httpClient = new()
         {
-            Timeout = TimeSpan.FromSeconds(600)
+            Timeout = TimeSpan.FromSeconds(600),
+            BaseAddress = Endpoint
         };
 
-        using OllamaClient client = new(httpClient, Endpoint);
+        using OllamaClient client = new(httpClient);
 
         byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
 
