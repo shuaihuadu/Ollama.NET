@@ -9,8 +9,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(llama3, "Hello!");
 
-        Console.WriteLine(response.Response);
-
+        Console.WriteLine(response.AsJson());
     }
 
     public static async Task GenerateCompletionStreaming()
@@ -19,16 +18,9 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
 
         StreamingResponse<GenerateCompletionResponse> response = await client.GenerateCompletionStreamingAsync(llama3, "Hello!");
 
-        Console.WriteLine(response);
-
         await foreach (GenerateCompletionResponse item in response)
         {
-            Console.WriteLine(item.Model);
-
-            if (item.Done)
-            {
-                Console.WriteLine(item.AsJson());
-            }
+            Console.WriteLine(item.AsJson());
         }
     }
 
@@ -160,13 +152,13 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
         GenerateCompletionOptions options = new()
         {
             Model = llava,
-            Prompt = "What is in this picture?",
+            Prompt = "What is in this image?",
             Images = [Convert.ToBase64String(bytes)]
         };
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(options);
 
-        Console.WriteLine(response.Response);
+        Console.WriteLine(response.AsJson());
     }
 
 

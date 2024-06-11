@@ -6,12 +6,25 @@ internal class Program
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
 
-        await ChatCompletionSamples.ChatCompletion();
+        //Generate Completion
+        //await GenerateCompletionSamples.GenerateCompletion();
+        await GenerateCompletionSamples.GenerateCompletion_WithImages();
+
+        //Generate Completion Streaming
+        //await GenerateCompletionSamples.GenerateCompletionStreaming();
+
+        //Chat Completion
+        //await ChatCompletionSamples.ChatCompletion();
+
+        //Chat Completion Streaming
+        //await ChatCompletionSamples.ChatCompletionStreaming();
+
+        //Generate Embedding
+        //await GenerateEmbeddingSamples.GenerateEmbedding();
+
 
         Console.ForegroundColor = ConsoleColor.Gray;
 
-        Console.WriteLine("");
-        Console.WriteLine("Press any key to exit...");
-        Console.ReadKey();
+        Console.WriteLine();
     }
 }

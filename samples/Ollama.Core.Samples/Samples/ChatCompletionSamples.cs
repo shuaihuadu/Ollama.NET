@@ -6,13 +6,13 @@ public class ChatCompletionSamples : OllamaClientSampleBase
     {
         using OllamaClient client = GetTestClient();
 
-        ChatMessageHistory messages = [];
+        ChatMessageHistory messages = new("You are my AI Assistant.");
 
         messages.AddUserMessage("Hello!");
 
         ChatCompletionResponse response = await client.ChatCompletionAsync(llama3, messages);
 
-        Console.WriteLine(response.Message?.Content);
+        Console.WriteLine(response.AsJson());
     }
 
 
@@ -28,7 +28,7 @@ public class ChatCompletionSamples : OllamaClientSampleBase
 
         await foreach (ChatCompletionResponse item in response)
         {
-            Console.WriteLine(item.Message?.Content);
+            Console.WriteLine(item.AsJson());
         }
     }
 
