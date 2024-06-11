@@ -10,7 +10,7 @@ public sealed partial class OllamaClientTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            using OllamaClient ollamaClient = includeLoggerFactory
+            OllamaClient ollamaClient = includeLoggerFactory
                 ? new OllamaClient(NullUri, this._mockLoggerFactory.Object)
                 : new OllamaClient(NullUri);
         });
@@ -23,14 +23,14 @@ public sealed partial class OllamaClientTests
     {
         Assert.Throws<UriFormatException>(() =>
         {
-            using OllamaClient ollamaClient = includeLoggerFactory
+            OllamaClient ollamaClient = includeLoggerFactory
                 ? new OllamaClient(string.Empty, this._mockLoggerFactory.Object)
                 : new OllamaClient(string.Empty);
         });
 
         Assert.Throws<UriFormatException>(() =>
         {
-            using OllamaClient ollamaClient = includeLoggerFactory
+            OllamaClient ollamaClient = includeLoggerFactory
                 ? new OllamaClient("invalid url", this._mockLoggerFactory.Object)
                 : new OllamaClient("invalid url");
         });
@@ -44,7 +44,7 @@ public sealed partial class OllamaClientTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            using OllamaClient ollamaClient = includeLoggerFactory
+            OllamaClient ollamaClient = includeLoggerFactory
                 ? new OllamaClient(NullHttpClient, this._mockLoggerFactory.Object)
                 : new OllamaClient(NullHttpClient);
         });
@@ -52,7 +52,7 @@ public sealed partial class OllamaClientTests
         //_httpClint.BaseAddress is null
         Assert.Throws<ArgumentNullException>(() =>
         {
-            using OllamaClient ollamaClient = includeLoggerFactory
+            OllamaClient ollamaClient = includeLoggerFactory
                 ? new OllamaClient(this._httpClient, this._mockLoggerFactory.Object)
                 : new OllamaClient(this._httpClient);
         });

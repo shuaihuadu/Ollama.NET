@@ -7,7 +7,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task LoadModelUseGenerateCompletion()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.LoadModelUseGenerateCompletionEndpointAsync(model);
 
@@ -17,7 +17,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task LoadModelUseChatCompletion()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.LoadModelUseChatCompletionEndpointAsync(model);
 
@@ -27,7 +27,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task UnloadModelUseGenerateCompletion()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.UnloadModelUseGenerateCompletionEndpointAsync(model);
 
@@ -37,7 +37,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task UnloadModelUseChatCompletion()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         LoadModelResponse response = await client.UnloadModelUseChatCompletionEndpointAsync(model);
 
@@ -47,7 +47,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task CreateModel()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         CreateModelResponse response = await client.CreateModelAsync("llama3-shuaihua", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
@@ -58,7 +58,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task CreateModelStreaming()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         StreamingResponse<CreateModelResponse> response = await client.CreateModelStreamingAsync("llama3-mario2", "FROM llama3\nSYSTEM You are mario from Super Mario Bros.");
 
@@ -71,7 +71,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task ListModels()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ListModelResponse models = await client.ListModelsAsync();
 
@@ -85,7 +85,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task ListRunningModels()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ListRunningModelResponse models = await client.ListRunningModelsAsync();
 
@@ -99,7 +99,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task ShowModel()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ShowModelResponse response = await client.ShowModelAsync(model);
 
@@ -110,7 +110,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task CopyModel()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         await client.CopyModelAsync("llama3", "llama3-mario1");
 
@@ -122,7 +122,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
     public static async Task DeleteModel()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         await client.DeleteModelAsync("llama3-mario1");
 
@@ -136,7 +136,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
     {
         string modelName = "all-minilm";
 
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         await client.DeleteModelAsync(modelName);
 
@@ -151,7 +151,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
     {
         string modelName = "all-minilm";
 
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         await client.DeleteModelAsync(modelName);
 
@@ -182,7 +182,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
 
         string name = "shuaihuadu/phi3:unittest";
 
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         PushModelResponse response = await client.PushModelAsync(name);
 
@@ -194,7 +194,7 @@ public class ModelOperationSamples : OllamaClientSampleBase
     {
         string name = "shuaihuadu/phi3:unittest";
 
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         await client.PushModelStreamingAsync(name);
 

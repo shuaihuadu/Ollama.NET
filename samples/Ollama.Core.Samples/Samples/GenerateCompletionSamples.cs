@@ -5,7 +5,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
 
     public static async Task GenerateCompletion()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         GenerateCompletionResponse response = await client.GenerateCompletionAsync(llama3, "Hello!");
 
@@ -14,7 +14,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
 
     public static async Task GenerateCompletionStreaming()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         StreamingResponse<GenerateCompletionResponse> response = await client.GenerateCompletionStreamingAsync(llama3, "Hello!");
 
@@ -27,7 +27,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
 
     public static async Task GenerateCompletion_FormatJson()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         GenerateCompletionOptions options = new()
         {
@@ -45,7 +45,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
     public static async Task GenerateCompletion_RawMode()
     {
         //In some cases, you may wish to bypass the templating system and provide a full prompt. In this case, you can use the raw parameter to disable templating. Also note that raw mode will not return a context.
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         GenerateCompletionOptions options = new()
         {
@@ -64,7 +64,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
     {
         //For reproducible outputs, set temperature to 0 and seed to a number
 
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         GenerateCompletionOptions options = new()
         {
@@ -90,7 +90,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
         //If you want to set custom options for the model at runtime rather than in the Modelfile, you can do so with the options parameter.
         //This example sets every available option, but you can set any of them individually and omit the ones you do not want to override.
 
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ParameterOptions parameterOptions = new()
         {
@@ -145,7 +145,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
             BaseAddress = Endpoint
         };
 
-        using OllamaClient client = new(httpClient);
+        OllamaClient client = new(httpClient);
 
         byte[] bytes = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, "Resources", "sk.png"));
 
@@ -165,7 +165,7 @@ public class GenerateCompletionSamples : OllamaClientSampleBase
 
     public static async Task GenerateCompletion_WithContext()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         GenerateCompletionResponse response1 = await client.GenerateCompletionAsync(llama3, "Hello! I'm Sam! 24 years old.");
 

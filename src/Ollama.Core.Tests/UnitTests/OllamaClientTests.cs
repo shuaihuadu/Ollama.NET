@@ -24,7 +24,7 @@ public sealed partial class OllamaClientTests
     [InlineData(false)]
     public void ConstructsWorkCorrectlyWithUri(bool includeLoggerFactory)
     {
-        using OllamaClient ollamaClient = includeLoggerFactory
+        OllamaClient ollamaClient = includeLoggerFactory
             ? new OllamaClient(MockUri, this._mockLoggerFactory.Object)
             : new OllamaClient(MockUri);
 
@@ -36,7 +36,7 @@ public sealed partial class OllamaClientTests
     [InlineData(false)]
     public void ConstructsWorkCorrectlyWithUriString(bool includeLoggerFactory)
     {
-        using OllamaClient ollamaClient = includeLoggerFactory
+        OllamaClient ollamaClient = includeLoggerFactory
             ? new OllamaClient(MockUriString, this._mockLoggerFactory.Object)
             : new OllamaClient(MockUriString);
 
@@ -50,7 +50,7 @@ public sealed partial class OllamaClientTests
     {
         this._httpClient.BaseAddress = MockUri;
 
-        using OllamaClient ollamaClient = includeLoggerFactory
+        OllamaClient ollamaClient = includeLoggerFactory
             ? new OllamaClient(this._httpClient, this._mockLoggerFactory.Object)
             : new OllamaClient(this._httpClient);
 

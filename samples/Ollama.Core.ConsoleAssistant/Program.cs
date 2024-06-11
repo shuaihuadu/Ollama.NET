@@ -29,7 +29,7 @@ internal class Program
 
     static async Task<string> LoadModelAsync(string model)
     {
-        using OllamaClient client = new(Endpoint);
+        OllamaClient client = new(Endpoint);
 
         LoadModelResponse loadModelResponse = await client.LoadModelUseChatCompletionEndpointAsync(model, -1);
 
@@ -63,7 +63,7 @@ internal class Program
 
     static async Task<IList<ListModelItem>> GetModelsAsync()
     {
-        using OllamaClient client = new(Endpoint);
+        OllamaClient client = new(Endpoint);
 
         ListModelResponse response = await client.ListModelsAsync();
 

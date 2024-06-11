@@ -29,7 +29,7 @@ internal abstract class Assistant(string model, string endpoint, string systemPr
     {
         this._messages.AddUserMessage(message);
 
-        using OllamaClient ollamaClient = new(this._endpoint);
+        OllamaClient ollamaClient = new(this._endpoint);
 
         StringBuilder assistantMessageBuilder = new();
 

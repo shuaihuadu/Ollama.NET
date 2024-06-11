@@ -4,7 +4,7 @@ public class GenerateEmbeddingSamples : OllamaClientSampleBase
 {
     public static async Task GenerateEmbedding()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         EmbeddingResponse response = await client.GenerateEmbeddingAsync("all-minilm", "Hello Embedding!");
 

@@ -4,7 +4,7 @@ public class ChatCompletionSamples : OllamaClientSampleBase
 {
     public static async Task ChatCompletion()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ChatMessageHistory messages = new("You are my AI Assistant.");
 
@@ -18,7 +18,7 @@ public class ChatCompletionSamples : OllamaClientSampleBase
 
     public static async Task ChatCompletionStreaming()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ChatMessageHistory messages = [];
 
@@ -35,7 +35,7 @@ public class ChatCompletionSamples : OllamaClientSampleBase
 
     public static async Task ChatCompletionWithChatMessageHistory()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ChatMessageHistory messages = [];
 
@@ -59,7 +59,7 @@ public class ChatCompletionSamples : OllamaClientSampleBase
             BaseAddress = Endpoint
         };
 
-        using OllamaClient client = new(httpClient);
+        OllamaClient client = new(httpClient);
 
         ChatMessageHistory messages = [];
 
@@ -73,7 +73,7 @@ public class ChatCompletionSamples : OllamaClientSampleBase
 
     public static async Task ChatCompletionWithOptions()
     {
-        using OllamaClient client = GetTestClient();
+        OllamaClient client = GetTestClient();
 
         ParameterOptions parameterOptions = new()
         {

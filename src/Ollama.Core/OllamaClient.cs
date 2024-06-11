@@ -3,7 +3,7 @@
 /// <summary>
 /// An implementation of a client for the Ollama serve.
 /// </summary>
-public sealed partial class OllamaClient : IDisposable
+public sealed partial class OllamaClient
 {
     private readonly Uri _endpoint;
     private readonly HttpClient _httpClient;
@@ -51,9 +51,6 @@ public sealed partial class OllamaClient : IDisposable
         this._endpoint = httpClient.BaseAddress;
         this._logger = loggerFactory?.CreateLogger(typeof(OllamaClient)) ?? NullLogger.Instance;
     }
-
-    /// <inheritdoc />
-    public void Dispose() => this._httpClient.Dispose();
 
     private async Task<(HttpResponseMessage, string)> ExecuteHttpRequestAsync(HttpRequestMessage httpRequest, CancellationToken cancellationToken = default)
     {
