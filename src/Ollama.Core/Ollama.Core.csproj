@@ -3,7 +3,7 @@
 		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latest</LangVersion>
-		<NoWarn>$(NoWarn);</NoWarn>
+		<NoWarn>$(NoWarn);S2139;CA1000</NoWarn>
 	</PropertyGroup>
 
 	<Import Project="$(SolutionDir)/nuget/nuget-package.props" />

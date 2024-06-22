@@ -109,7 +109,7 @@ internal static class Argument
 
     public static void AssertNull<T>(T value, string name, string? message = null)
     {
-        if (value != null)
+        if (value is not null)
         {
             throw new ArgumentException(message ?? "Value must be null.", name);
         }

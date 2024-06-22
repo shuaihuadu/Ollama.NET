@@ -1,23 +1,26 @@
-﻿namespace Ollama.Core.ServerSendEvent;
+﻿// Copyright (c) IdeaTech. All rights reserved.
 
-/// <summary>  
+namespace Ollama.Core.ServerSendEvent;
+
+/// <summary>
 /// Reads events from a stream and deserializes them into objects of <typeparamref name="T"/>.
-/// Initializes a new instance of the <see cref="ServerSendEventReader{T}"/> class with the specified <paramref name="reader"/>.  
-/// </summary>  
+/// Initializes a new instance of the <see cref="ServerSendEventReader{T}"/> class with the specified <paramref name="reader"/>.
+/// </summary>
 /// <typeparam name="T">The type of object to deserialize the events into. Must be a class.</typeparam>
 /// <param name="reader">The StreamReader to read events from.</param>
 internal sealed class ServerSendEventReader<T>(StreamReader reader) : IDisposable where T : class
 {
     private readonly StreamReader _reader = reader;
+
     private bool _disposedValue;
 
-    /// <summary>  
-    /// Tries to read a line asynchronously from the StreamReader and deserialize it into an object of type <typeparamref name="T"/>.  
-    /// </summary>  
-    /// <returns>A task representing the asynchronous operation, with a result of the deserialized object of type <typeparamref name="T"/>, or null if the line is empty or cannot be parsed.</returns>  
+    /// <summary>
+    /// Tries to read a line asynchronously from the StreamReader and deserialize it into an object of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation, with a result of the deserialized object of type <typeparamref name="T"/>, or null if the line is empty or cannot be parsed.</returns>
     public async Task<T?> TryReadLineAsync()
     {
-        string? lineText = await _reader.ReadLineAsync().ConfigureAwait(false);
+        string? lineText = await this._reader.ReadLineAsync().ConfigureAwait(false);
 
         if (lineText is null)
         {
@@ -37,12 +40,12 @@ internal sealed class ServerSendEventReader<T>(StreamReader reader) : IDisposabl
         return null;
     }
 
-    /// <summary>  
-    /// Tries to parse a line of text into an object of type T.  
-    /// </summary>  
-    /// <param name="lineText">The line of text to parse.</param>  
-    /// <param name="line">When this method returns, contains the parsed object of type <typeparamref name="T"/>, if the parsing succeeded, or the default value of <typeparamref name="T"/> if the parsing failed.</param>  
-    /// <returns>True if the line was successfully parsed; otherwise, false.</returns>  
+    /// <summary>
+    /// Tries to parse a line of text into an object of type T.
+    /// </summary>
+    /// <param name="lineText">The line of text to parse.</param>
+    /// <param name="line">When this method returns, contains the parsed object of type <typeparamref name="T"/>, if the parsing succeeded, or the default value of <typeparamref name="T"/> if the parsing failed.</param>
+    /// <returns>True if the line was successfully parsed; otherwise, false.</returns>
     private static bool TryParseLine(string lineText, out T? line)
     {
         if (lineText.Length == 0)
@@ -57,9 +60,9 @@ internal sealed class ServerSendEventReader<T>(StreamReader reader) : IDisposabl
         return true;
     }
 
-    /// <summary>  
-    /// Releases the unmanaged resources used by the ServerSendEventReader and optionally releases the managed resources.  
-    /// </summary>  
+    /// <summary>
+    /// Releases the unmanaged resources used by the ServerSendEventReader and optionally releases the managed resources.
+    /// </summary>
     /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
@@ -67,19 +70,20 @@ internal sealed class ServerSendEventReader<T>(StreamReader reader) : IDisposabl
         {
             if (disposing)
             {
-                _reader.Dispose();
+                this._reader.Dispose();
             }
 
-            _disposedValue = true;
+            this._disposedValue = true;
         }
     }
 
-    /// <summary>  
-    /// Releases all resources used by the ServerSendEventReader.  
-    /// </summary>  
+    /// <summary>
+    /// Releases all resources used by the ServerSendEventReader.
+    /// </summary>
     public void Dispose()
     {
-        Dispose(true);
+        this.Dispose(true);
+
         GC.SuppressFinalize(this);
     }
 }

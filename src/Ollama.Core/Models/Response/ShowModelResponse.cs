@@ -6,7 +6,7 @@
 public class ShowModelResponse
 {
     /// <summary>
-    /// 
+    /// The model license content.
     /// </summary>
     [JsonPropertyName("license")]
     public string? License { get; set; }

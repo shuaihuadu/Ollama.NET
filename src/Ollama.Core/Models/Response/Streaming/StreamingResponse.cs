@@ -1,4 +1,6 @@
-﻿namespace Ollama.Core.Models;
+﻿// Copyright (c) IdeaTech. All rights reserved.
+
+namespace Ollama.Core.Models;
 
 /// <summary>
 /// Represents an operation response with streaming content that can be deserialized and enumerated while the response
@@ -8,17 +10,21 @@
 public class StreamingResponse<T> : IDisposable, IAsyncEnumerable<T>
 {
     private HttpResponseMessage HttpResponseMessage { get; } = null!;
+
     private IAsyncEnumerable<T> AsyncEnumerableSource { get; } = null!;
+
     private bool DisposedValue { get; set; }
 
-    private StreamingResponse() { }
+    private StreamingResponse()
+    {
+    }
 
     private StreamingResponse(
         HttpResponseMessage httpResponseMessage,
         Func<HttpResponseMessage, IAsyncEnumerable<T>> asyncEnumerableProcessor)
     {
-        HttpResponseMessage = httpResponseMessage;
-        AsyncEnumerableSource = asyncEnumerableProcessor.Invoke(httpResponseMessage);
+        this.HttpResponseMessage = httpResponseMessage;
+        this.AsyncEnumerableSource = asyncEnumerableProcessor.Invoke(httpResponseMessage);
     }
 
     /// <summary>
@@ -52,28 +58,29 @@ public class StreamingResponse<T> : IDisposable, IAsyncEnumerable<T>
     /// </para>
     /// </remarks>
     /// <returns></returns>
-    public IAsyncEnumerable<T> EnumerateValues() => this;
+    public IAsyncEnumerable<T> EnumerateValuesAsync() => this;
 
     /// <inheritdoc/>
     public void Dispose()
     {
-        Dispose(disposing: true);
+        this.Dispose(disposing: true);
+
         GC.SuppressFinalize(this);
     }
 
     /// <inheritdoc />
     protected virtual void Dispose(bool disposing)
     {
-        if (!DisposedValue)
+        if (!this.DisposedValue)
         {
             if (disposing)
             {
                 this.HttpResponseMessage?.Dispose();
             }
 
-            DisposedValue = true;
+            this.DisposedValue = true;
         }
     }
 
-    IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken) => AsyncEnumerableSource?.GetAsyncEnumerator(cancellationToken)!;
+    IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken) => this.AsyncEnumerableSource?.GetAsyncEnumerator(cancellationToken)!;
 }

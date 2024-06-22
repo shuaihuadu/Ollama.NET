@@ -72,7 +72,7 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Generate completion streaming response content: {ResponseContent}", response.ResponseContent);
 
-            return StreamingResponse<GenerateCompletionResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<GenerateCompletionResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
+            return StreamingResponse<GenerateCompletionResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<GenerateCompletionResponse>.EnumerateFromSseStreamAsync(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {

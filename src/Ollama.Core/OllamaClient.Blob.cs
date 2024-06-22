@@ -1,4 +1,6 @@
-﻿namespace Ollama.Core;
+﻿// Copyright (c) IdeaTech. All rights reserved.
+
+namespace Ollama.Core;
 
 public sealed partial class OllamaClient
 {
@@ -11,7 +13,7 @@ public sealed partial class OllamaClient
     /// <returns>Return true if the blob exists, otherwise if it does not.</returns>
     public async Task<bool> CheckBlobExistsAsync(string digest, CancellationToken cancellationToken = default)
     {
-        return await CheckBlobExistsAsync(new CheckBlobExistsRequest
+        return await this.CheckBlobExistsAsync(new CheckBlobExistsRequest
         {
             Digest = digest
         }, cancellationToken).ConfigureAwait(false);
@@ -25,7 +27,7 @@ public sealed partial class OllamaClient
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the initial request or ongoing streaming operation.</param>
     public async Task CreateBlobAsync(string digest, byte[] content, CancellationToken cancellationToken = default)
     {
-        await CreateBlobAsync(new CreateBlobRequest
+        await this.CreateBlobAsync(new CreateBlobRequest
         {
             Digest = digest,
             Content = content

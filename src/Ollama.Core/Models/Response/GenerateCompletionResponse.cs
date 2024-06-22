@@ -42,6 +42,6 @@ public class GenerateCompletionResponse : CompletionDoneResponseBase
     /// An encoding of the conversation used in this response, this can be sent in the next request to keep a conversational memory
     /// </summary>
     [JsonPropertyName("context")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public long[]? Context { get; protected set; }
 }

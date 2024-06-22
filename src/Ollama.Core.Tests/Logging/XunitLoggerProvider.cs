@@ -6,10 +6,10 @@ internal class XunitLoggerProvider : ILoggerProvider
 
     public XunitLoggerProvider(ITestOutputHelper testOutputHelper)
     {
-        _testOutputHelper = testOutputHelper;
+        this._testOutputHelper = testOutputHelper;
     }
 
-    public ILogger CreateLogger(string categoryName) => new XunitLogger(_testOutputHelper, categoryName);
+    public ILogger CreateLogger(string categoryName) => new XunitLogger(this._testOutputHelper, categoryName);
 
     public void Dispose() { }
 }

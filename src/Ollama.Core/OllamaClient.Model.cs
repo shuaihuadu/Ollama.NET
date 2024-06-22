@@ -338,7 +338,7 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Create model streaming response content: {ResponseContent}", response.ResponseContent);
 
-            return StreamingResponse<CreateModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<CreateModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
+            return StreamingResponse<CreateModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<CreateModelResponse>.EnumerateFromSseStreamAsync(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
@@ -591,7 +591,7 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Pull model streaming response content: {ResponseContent}", response.responseContent);
 
-            return StreamingResponse<PullModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PullModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
+            return StreamingResponse<PullModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PullModelResponse>.EnumerateFromSseStreamAsync(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {
@@ -661,7 +661,7 @@ public sealed partial class OllamaClient
 
             this._logger.LogTrace("Push model streaming response content: {ResponseContent}", response.responseContent);
 
-            return StreamingResponse<PushModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PushModelResponse>.EnumerateFromSseStream(responseMessage, cancellationToken));
+            return StreamingResponse<PushModelResponse>.CreateFromResponse(response.HttpResponseMessage, (responseMessage) => ServerSendEventAsyncEnumerator<PushModelResponse>.EnumerateFromSseStreamAsync(responseMessage, cancellationToken));
         }
         catch (HttpOperationException ex)
         {

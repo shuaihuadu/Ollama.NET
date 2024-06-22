@@ -8,13 +8,14 @@ internal class Program
 
         //Generate Completion
         //await GenerateCompletionSamples.GenerateCompletion();
-        await GenerateCompletionSamples.GenerateCompletion_WithImages();
+        //await GenerateCompletionSamples.GenerateCompletion_WithImages();
 
         //Generate Completion Streaming
         //await GenerateCompletionSamples.GenerateCompletionStreaming();
 
         //Chat Completion
         //await ChatCompletionSamples.ChatCompletion();
+        await ChatCompletionSamples.ChatCompletionWithOptions();
 
         //Chat Completion Streaming
         //await ChatCompletionSamples.ChatCompletionStreaming();

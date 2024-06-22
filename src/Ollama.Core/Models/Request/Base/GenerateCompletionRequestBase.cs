@@ -9,7 +9,7 @@ internal abstract class GenerateCompletionRequestBase : GenerateCompletionOption
     /// <param name="model">The model name.</param>  
     /// <param name="prompt"> The prompt to generate a response for.</param>
     /// <param name="stream">If false the response will be returned as a single response object, rather than a stream of objects</param>
-    public GenerateCompletionRequestBase(string model, string prompt, bool stream)
+    protected GenerateCompletionRequestBase(string model, string prompt, bool stream)
     {
         this.Model = model;
         this.Prompt = prompt;
@@ -20,7 +20,7 @@ internal abstract class GenerateCompletionRequestBase : GenerateCompletionOption
     /// Initializes a new instance of the <see cref="GenerateCompletionRequestBase"/> class with the specified options.  
     /// </summary>
     /// <param name="options">The options to use for generating completions, including model, prompt, and additional settings.</param>
-    public GenerateCompletionRequestBase(GenerateCompletionOptions options)
+    protected GenerateCompletionRequestBase(GenerateCompletionOptions options)
     {
         Argument.AssertNotNull(options, nameof(options));
 
